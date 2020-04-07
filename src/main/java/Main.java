@@ -7,7 +7,6 @@ import model.WebSetup;
 import model.building.BuildingName;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebElement;
 
 import java.awt.*;
 import java.io.FileInputStream;
@@ -33,11 +32,11 @@ public class Main {
 
         WebSetup websetup = WebSetup.getInstance();
         try {
-            LoginController login = new LoginController(websetup.getChromeWebDriver(), websetup.getWait(), USERNAME,
+            LoginController login = new LoginController(websetup, USERNAME,
                     PASSWORD, WORLD_NAME, URL);
 
             VillageFactory villageFactory = new VillageFactory(websetup);
-            BasicController basicController = new BasicController(websetup.getChromeWebDriver(), websetup.getWait(), websetup.getAWTRobot());
+            BasicController basicController = new BasicController(websetup);
             RuleAttackBarbaric ruleAttackBarbaric = new RuleAttackBarbaric();
 
             basicController.goToMainMenu();
@@ -53,10 +52,9 @@ public class Main {
 
                         basicController.goToBuilding(BuildingName.HEADQUARTER);
                         try {
-                            WebElement element = websetup.getChromeWebDriver().findElement(By.xpath("//div[@class='building-container building-" +
+                            websetup.clickOn(By.xpath("//div[@class='building-container building-" +
                                     toImprove.get().getLabelIdFromMap() +
                                     "']//div//div//span[@class='size-44x44 btn-upgrade btn-orange']"));
-                            element.click();
                         } catch (NoSuchElementException e) {
                             System.out.println(toImprove.get().getLabelIdFromMap() + " not found ...");
                         }

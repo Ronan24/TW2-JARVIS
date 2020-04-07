@@ -1,8 +1,12 @@
 package model;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.awt.*;
@@ -14,21 +18,23 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.PosixFilePermission;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+
+import static controller.LoginController.waitForLoad;
 
 
 public class WebSetup {
     private static final WebSetup instance = new WebSetup();
 
-    public static final WebSetup getInstance()
-    {
+    public static final WebSetup getInstance() {
         return instance;
     }
 
 
-    WebDriver driver = null;
-    Robot r = null;
-    WebDriverWait wait = null;
+    private WebDriver driver = null;
+    private Robot r = null;
+    private WebDriverWait wait = null;
 
     private WebSetup() {
         String os = System.getProperty("os.name").toUpperCase();
@@ -104,25 +110,61 @@ public class WebSetup {
         }
     }
 
-    public WebDriver getChromeWebDriver() {
-        return this.driver;
-    }
-
-    public Robot getAWTRobot() {
-        return this.r;
-    }
-
-    public WebDriverWait getWait() {
-        return this.wait;
-    }
-
     public void quitWithDelay() throws InterruptedException {
         if (driver != null) {
-            //Thread.sleep(6000);//6 secunde
+            Thread.sleep(6000);
             driver.quit();
         }
-
     }
 
+    public void navigate(String url) {
+        this.driver.navigate().to(url);
+        this.driver.manage().window().maximize();
+        waitForLoad(driver);
+    }
 
+    public void clickOn(By by) {
+        WebElement element = this.wait.until(ExpectedConditions.elementToBeClickable(by));
+        element.click();
+    }
+
+    public void sendKey(By by, String key) {
+        WebElement element = this.driver.findElement(by);
+        element.clear();
+        element.sendKeys(key);
+    }
+
+    public Integer readInteger(By by) {
+        return Integer.parseInt(this.readValue(by).replace(" ", ""));
+    }
+
+    public String readValue(By by) {
+        WebElement element = this.driver.findElement(by);
+        return element.getText();
+    }
+
+    public void submit(By by) {
+        WebElement element = this.driver.findElement(by);
+        element.submit();
+    }
+
+    public void clickToWorld(String worldName, String username) {
+        WebElement elem = null;
+        List<WebElement> worlds = driver.findElements(By.partialLinkText(worldName.trim()));
+        if (worlds.size() > 0) {
+            System.out.println("world Available !");
+
+            for (WebElement world : worlds) {
+                if (world.getAttribute("innerHTML").contains(username))
+                    elem = world;
+                else if (world.getAttribute("innerHTML").contains(username.toUpperCase()))
+                    elem = world;
+            }
+
+        }
+
+
+        JavascriptExecutor ex = (JavascriptExecutor) driver;
+        ex.executeScript("arguments[0].click();", elem);
+    }
 }
