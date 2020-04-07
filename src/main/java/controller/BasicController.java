@@ -1,5 +1,7 @@
 package controller;
 
+import model.Army;
+import model.UnitStaticInfo;
 import model.building.BuildingName;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -67,6 +69,38 @@ public class BasicController {
         Thread.sleep(3000);
     }
 
+    public void attackVillage(Point point, Army army, Army armyToSend) throws InterruptedException {
+        this.goToVillage(point);
+
+        WebElement loc =  wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[contains(@class,'context-menu-item custom-army')]//div//div[contains(@class,'border')]")));
+        loc.click();
+        Thread.sleep(3000);
+
+        int index = 1;
+
+        for (UnitStaticInfo unitStaticInfo : UnitStaticInfo.values()) {
+            if (army.getUnitNumberByUnit(unitStaticInfo) > 0){
+                if (armyToSend.getUnitNumberByUnit(unitStaticInfo) != null){
+                    System.out.println("Let's send " +
+                            armyToSend.getUnitNumberByUnit(unitStaticInfo) +
+                            " " +
+                            unitStaticInfo.name());
+
+                    loc = driver.findElement(By.xpath("/html[1]/body[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/ul[1]/li[" +
+                            index +
+                            "]/div[1]/div[3]/input[1]"));
+                    loc.sendKeys(String.valueOf(armyToSend.getUnitNumberByUnit(unitStaticInfo)));
+                }
+                index++;
+            }
+        }
+
+        loc = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(@class,'btn-orange btn-form btn-border no-padding')]")));
+        loc.click();
+        Thread.sleep(2000);
+        this.goToMainMenu();
+    }
+
     public void goToVillage(Point point) throws InterruptedException {
         WebElement loc =  wait.until(ExpectedConditions.elementToBeClickable(By.id("world-map")));
         loc.click();
@@ -76,16 +110,9 @@ public class BasicController {
         loc =driver.findElement(By.xpath("(//input[@type='number'])[2]"));
         loc.clear();
         loc.sendKeys(String.valueOf(point.y));
-        loc = driver.findElement(By.xpath("//div[2]/div/div/div/table/tbody/tr/td[3]/div"));
+        loc = driver.findElement(By.xpath("//footer[@id='interface-bottom-container']//td[3]//div[1]"));
         loc.click();
-        Thread.sleep(4000);
-        loc = driver.findElement(By.xpath("//li[@class='context-menu-item presets']//div//div[@class='border']"));
-        loc.click();
-        Thread.sleep(3000);
-        loc = driver.findElement(By.xpath("//div[3]//table[1]//tbody[1]//tr[2]//td[3]//a[1]"));
-        loc.click();
-        Thread.sleep(2000);
-        this.goToMainMenu();
+
 
     }
 }

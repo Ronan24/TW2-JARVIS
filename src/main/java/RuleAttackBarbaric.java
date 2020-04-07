@@ -1,3 +1,5 @@
+import javafx.util.Pair;
+import model.Army;
 import model.UnitStaticInfo;
 import model.Village;
 
@@ -16,22 +18,26 @@ public class RuleAttackBarbaric {
     public RuleAttackBarbaric() {
         this.myBarbaricVillages = new LinkedList<>();
 
-        this.myBarbaricVillages.add(new Point(448,521));
-        this.myBarbaricVillages.add(new Point(455,518));
         this.myBarbaricVillages.add(new Point(454,525));
         this.myBarbaricVillages.add(new Point(449,524));
         this.myBarbaricVillages.add(new Point(452,520));
         this.myBarbaricVillages.add(new Point(452,528));
         this.myBarbaricVillages.add(new Point(453,516));
+        this.myBarbaricVillages.add(new Point(448,521));
+        this.myBarbaricVillages.add(new Point(455,518));
     }
 
-    public Optional<Point> findBestBarbaricVillageToAttack(Village village) {
+    public Optional<Pair<Point, Army>> findBestBarbaricVillageToAttack(Village village) {
         if (village.getUnitNumberByUnit(UnitStaticInfo.SPEARMAN) < 20){
             return Optional.empty();
         } else {
             Point next = this.myBarbaricVillages.poll();
             this.myBarbaricVillages.add(next);
-            return Optional.of(next);
+
+            Army army = new Army();
+            army.addUnit(UnitStaticInfo.SPEARMAN, 20);
+
+            return Optional.of(new Pair<>(next, army));
         }
     }
 }

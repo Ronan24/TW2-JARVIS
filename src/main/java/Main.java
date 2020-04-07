@@ -1,5 +1,7 @@
 import controller.BasicController;
 import controller.LoginController;
+import javafx.util.Pair;
+import model.Army;
 import model.Village;
 import model.WebSetup;
 import model.building.BuildingName;
@@ -68,12 +70,12 @@ public class Main {
                     System.out.println("Can't construct yet");
                 }
 
-                Optional<Point> toAttackOptional = ruleAttackBarbaric.findBestBarbaricVillageToAttack(village);
+                Optional<Pair<Point, Army>> toAttackOptional = ruleAttackBarbaric.findBestBarbaricVillageToAttack(village);
 
                 if (toAttackOptional.isPresent()) {
 
                     Thread.sleep(1000);
-                    basicController.goToVillage(toAttackOptional.get());
+                    basicController.attackVillage(toAttackOptional.get().getKey(), village.getArmy(), toAttackOptional.get().getValue());
 
                     Thread.sleep(1000);
                     basicController.goBack();
