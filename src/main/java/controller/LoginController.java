@@ -24,6 +24,8 @@ public class LoginController {
 
         Thread.sleep(5000);
 
+        webSetup.zoomOut();
+
         webSetup.clickToWorld(worldName, username);
 
     }

@@ -1,15 +1,13 @@
 package model;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -33,7 +31,7 @@ public class WebSetup {
 
 
     private WebDriver driver = null;
-    private Robot r = null;
+    private Robot robot = null;
     private WebDriverWait wait = null;
 
     private WebSetup() {
@@ -104,7 +102,7 @@ public class WebSetup {
         System.out.println("Chrome driver instance");
         wait = new WebDriverWait(driver, 100);
         try {
-            r = new Robot();
+            robot = new Robot();
         } catch (AWTException e) {
             e.printStackTrace();
         }
@@ -148,7 +146,14 @@ public class WebSetup {
         element.submit();
     }
 
-    public void clickToWorld(String worldName, String username) {
+    public void zoomOut() throws InterruptedException {
+        WebElement html = driver.findElement(By.tagName("html"));
+        html.sendKeys(Keys.chord(Keys.CONTROL, Keys.ADD));
+        Thread.sleep(1000);
+    }
+
+    public void clickToWorld(String worldName, String username) throws InterruptedException {
+
         WebElement elem = null;
         List<WebElement> worlds = driver.findElements(By.partialLinkText(worldName.trim()));
         if (worlds.size() > 0) {

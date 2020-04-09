@@ -31,7 +31,7 @@ public class BasicController {
 
     public int getQueueSize() {
         try {
-            return webSetup.readInteger(By.xpath("//div[@class='in-queue building-queue long']"));
+            return webSetup.readInteger(By.xpath("//div[@class='in-queue building-queue short']"));
         } catch (NoSuchElementException e) {
             return 0;
         }
