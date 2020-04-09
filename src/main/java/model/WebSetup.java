@@ -147,8 +147,10 @@ public class WebSetup {
     }
 
     public void zoomOut() throws InterruptedException {
-        WebElement html = driver.findElement(By.tagName("html"));
-        html.sendKeys(Keys.chord(Keys.CONTROL, Keys.ADD));
+        this.robot.keyPress(KeyEvent.VK_CONTROL);
+        this.robot.keyPress(KeyEvent.VK_SUBTRACT);
+        this.robot.keyRelease(KeyEvent.VK_CONTROL);
+        this.robot.keyRelease(KeyEvent.VK_SUBTRACT);
         Thread.sleep(1000);
     }
 
