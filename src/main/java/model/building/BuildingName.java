@@ -13,11 +13,11 @@ public enum BuildingName {
 //    CHAPEL("chapel", new TimberCampFactory()),
 //    RALLY_POINT("rally_point", new TimberCampFactory()),
     BARRACKS("barracks", new BarracksFactory()),
-//    STATUE("statue", new TimberCampFactory()),
+    STATUE("statue", new StatueFactory()),
     WALL("wall", new WallFactory()),
     HOSPITAL("hospital", new HospitalFactory()),
     MARKET("market", new MarketFactory()),
-//    TAVERN("tavern", new TimberCampFactory()),
+    TAVERN("tavern", new TavernFactory()),
 //    ACADEMY("academy", new TimberCampFactory()),
 //    HALL_OF_ORDERS("hall_of_orders", new TimberCampFactory()),
     TIMBER_CAMP("timber_camp", new TimberCampFactory());
