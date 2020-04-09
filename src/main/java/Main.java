@@ -1,6 +1,5 @@
 import controller.BasicController;
 import controller.LoginController;
-import javafx.util.Pair;
 import model.Army;
 import model.Village;
 import model.WebSetup;
@@ -12,6 +11,7 @@ import java.awt.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
 
@@ -68,17 +68,14 @@ public class Main {
                     System.out.println("Can't construct yet");
                 }
 
-                Optional<Pair<Point, Army>> toAttackOptional = ruleAttackBarbaric.findBestBarbaricVillageToAttack(village);
+                Map<Point, Army> toAttackOptional = ruleAttackBarbaric.findBestBarbaricVillageToAttack(village);
 
-                if (toAttackOptional.isPresent()) {
-
+                for (Point point : toAttackOptional.keySet()) {
                     Thread.sleep(1000);
-                    basicController.attackVillage(toAttackOptional.get().getKey(), village.getArmy(), toAttackOptional.get().getValue());
+                    basicController.attackVillage(point, village.getArmy(), toAttackOptional.get(point));
 
                     Thread.sleep(1000);
                     basicController.goBack();
-                } else {
-                    System.out.println("Not enough units...");
                 }
 
                 Thread.sleep(60000);
