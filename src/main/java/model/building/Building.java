@@ -50,4 +50,7 @@ public class Building {
     public int getIronCost(int level){
         return this.buildingStaticInfoList.get(level).getIronCost();
     }
+    public int getDuration(int level){
+        return this.buildingStaticInfoList.get(level).getDuration();
+    }
 }

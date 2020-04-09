@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public class Village {
     private Map<BuildingName, Building> villageBuildings;
-    private Map<UnitStaticInfo, Integer> unitMap;
+    private Army army;
     private Map<ResourceType, Integer> resourceMap;
     private int point;
     private int gold;
@@ -25,7 +25,7 @@ public class Village {
 
     public Village() {
         this.villageBuildings = new HashMap<>();
-        this.unitMap = new HashMap<>();
+        this.army = new Army();
         this.resourceMap = new HashMap<>();
     }
 
@@ -34,7 +34,7 @@ public class Village {
     }
 
     public Integer getUnitNumberByUnit(UnitStaticInfo unit) {
-        return unitMap.get(unit);
+        return this.army.getUnitNumberByUnit(unit);
     }
 
     public void addBuilding(BuildingName buildingName, Building building) {
@@ -46,7 +46,7 @@ public class Village {
         System.out.println("We have " +
                 numberOfUnits +
                 " of " + unitStaticInfo.name());
-        this.unitMap.put(unitStaticInfo, numberOfUnits);
+        this.army.addUnit(unitStaticInfo, numberOfUnits);
     }
 
     public void setPoint(int point) {
@@ -70,8 +70,8 @@ public class Village {
         return villageBuildings.values();
     }
 
-    public Map<UnitStaticInfo, Integer> getUnitMap() {
-        return unitMap;
+    public Army getArmy() {
+        return army;
     }
 
     public boolean improveIsValid(BuildingName buildingName){
