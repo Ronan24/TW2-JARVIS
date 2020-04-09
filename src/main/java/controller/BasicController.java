@@ -62,7 +62,7 @@ public class BasicController {
 
         for (UnitStaticInfo unitStaticInfo : UnitStaticInfo.values()) {
             if (army.getUnitNumberByUnit(unitStaticInfo) > 0) {
-                if (armyToSend.getUnitNumberByUnit(unitStaticInfo) != null) {
+                if (armyToSend.getUnitNumberByUnit(unitStaticInfo) != 0) {
                     System.out.println("Let's send " +
                             armyToSend.getUnitNumberByUnit(unitStaticInfo) +
                             " " +
