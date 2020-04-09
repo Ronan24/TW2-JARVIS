@@ -33,12 +33,13 @@ public class RuleAttackBarbaric {
 
     public Map<Point, Army> findBestBarbaricVillageToAttack(Village village) {
         Map<Point, Army> map = new HashMap<>();
-        Army army = new Army();
 
         int numberOfSpearMen = village.getUnitNumberByUnit(UnitStaticInfo.SPEARMAN);
         boolean paladinIsPresent = village.getUnitNumberByUnit(UnitStaticInfo.PALADIN) == 1;
 
         while (numberOfSpearMen >= 20){
+            Army army = new Army();
+
             Point next = this.myBarbaricVillages.poll();
             this.myBarbaricVillages.add(next);
 
