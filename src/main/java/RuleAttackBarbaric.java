@@ -16,6 +16,9 @@ public class RuleAttackBarbaric {
     public RuleAttackBarbaric() {
         this.myBarbaricVillages = new LinkedList<>();
 
+        this.myBarbaricVillages.add(new Point(453,516));
+        this.myBarbaricVillages.add(new Point(448,521));
+        this.myBarbaricVillages.add(new Point(455,518));
         this.myBarbaricVillages.add(new Point(455,523));
         this.myBarbaricVillages.add(new Point(453,529));
         this.myBarbaricVillages.add(new Point(454,529));
@@ -26,9 +29,6 @@ public class RuleAttackBarbaric {
         this.myBarbaricVillages.add(new Point(449,524));
         this.myBarbaricVillages.add(new Point(452,520));
         this.myBarbaricVillages.add(new Point(452,528));
-        this.myBarbaricVillages.add(new Point(453,516));
-        this.myBarbaricVillages.add(new Point(448,521));
-        this.myBarbaricVillages.add(new Point(455,518));
     }
 
     public Map<Point, Army> findBestBarbaricVillageToAttack(Village village) {
@@ -43,15 +43,16 @@ public class RuleAttackBarbaric {
             this.myBarbaricVillages.add(next);
 
             army.addUnit(UnitStaticInfo.SPEARMAN, 20);
+            if (paladinIsPresent){
+                army.addUnit(UnitStaticInfo.PALADIN, 1);
+                paladinIsPresent = false;
+            }
 
             map.put(next, army);
 
             numberOfSpearMen -= 20;
         }
 
-        if (paladinIsPresent){
-            army.addUnit(UnitStaticInfo.PALADIN, 1);
-        }
 
         return map;
     }
