@@ -1,11 +1,17 @@
 import controller.BasicController;
 import controller.LoginController;
-import model.Army;
+import factory.VillageFactory;
+import model.Player;
+import model.unit.Army;
 import model.Village;
-import model.WebSetup;
+import controller.WebSetup;
 import model.building.BuildingName;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import ruler.RuleAttackBarbaric;
+import ruler.RuleImproveBuildings;
 
 import java.awt.*;
 import java.io.FileInputStream;

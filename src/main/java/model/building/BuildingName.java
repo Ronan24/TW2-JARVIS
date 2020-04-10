@@ -1,5 +1,7 @@
 package model.building;
 
+import factory.building.*;
+
 /**
  * Created by ronan
  * on 05/04/2020.

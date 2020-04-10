@@ -1,6 +1,5 @@
 package controller;
 
-import model.WebSetup;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -11,7 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class LoginController {
 
 
-    public LoginController(WebSetup webSetup, String username, String password, String worldName, String url) throws InterruptedException {
+    public static void login(WebSetup webSetup, String username, String password, String worldName, String url) throws InterruptedException {
         webSetup.navigate(url);
 
         webSetup.sendKey(By.xpath("//input[@type='text']"), username);

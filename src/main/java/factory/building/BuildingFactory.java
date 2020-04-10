@@ -1,6 +1,8 @@
-package model.building;
+package factory.building;
 
-import model.WebSetup;
+import controller.WebSetup;
+import model.building.Building;
+import model.building.BuildingName;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 

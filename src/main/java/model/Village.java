@@ -3,9 +3,14 @@ package model;
 
 import model.building.Building;
 import model.building.BuildingName;
+import model.unit.Army;
+import model.unit.UnitStaticInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.awt.*;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 /**
@@ -13,20 +18,29 @@ import java.util.Map;
  * on 05/04/2020.
  */
 public class Village {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(Village.class);
+
     private Map<BuildingName, Building> villageBuildings;
     private Army army;
+    private Point localisation;
+    private String villageName;
     private Map<ResourceType, Integer> resourceMap;
-    private int point;
-    private int gold;
-    private int provisions;
-    private int iron;
-    private int wood;
-    private int clay;
 
-    public Village() {
-        this.villageBuildings = new HashMap<>();
+    public Village(Point localisation, String villageName) {
+        this.localisation = localisation;
+        this.villageName = villageName;
+        this.villageBuildings = new EnumMap<>(BuildingName.class);
         this.army = new Army();
-        this.resourceMap = new HashMap<>();
+        this.resourceMap = new EnumMap<>(ResourceType.class);
+    }
+
+    public Point getLocalisation() {
+        return localisation;
+    }
+
+    public String getVillageName() {
+        return villageName;
     }
 
     public Building getBuildingByBuildingName(BuildingName buildingName) {
@@ -38,31 +52,21 @@ public class Village {
     }
 
     public void addBuilding(BuildingName buildingName, Building building) {
-        System.out.println("Add building : " + building);
+        LOGGER.debug("Add building : {}", building);
         this.villageBuildings.put(buildingName, building);
     }
 
     public void addUnit(UnitStaticInfo unitStaticInfo, int numberOfUnits) {
-        System.out.println("We have " +
-                numberOfUnits +
-                " of " + unitStaticInfo.name());
+        LOGGER.debug("We have {} of {}", numberOfUnits, unitStaticInfo);
         this.army.addUnit(unitStaticInfo, numberOfUnits);
     }
 
-    public void setPoint(int point) {
-        this.point = point;
-    }
-
-    public void setGold(int gold) {
-        this.gold = gold;
-    }
-
     public void addResource(ResourceType resourceType, int amount) {
-        System.out.println(resourceType.name() + " : " + amount);
+        LOGGER.debug("{} : {}", resourceType, amount);
         this.resourceMap.put(resourceType, amount);
     }
 
-    public int getResourceByType(ResourceType resourceType){
+    public int getResourceByType(ResourceType resourceType) {
         return this.resourceMap.get(resourceType);
     }
 
@@ -74,11 +78,15 @@ public class Village {
         return army;
     }
 
-    public boolean improveIsValid(BuildingName buildingName){
+    public boolean improveIsValid(BuildingName buildingName) {
         Building building = this.getBuildingByBuildingName(buildingName);
 
-        return building.getWoodCost(building.getLevel()) <= this.getResourceByType(ResourceType.WOOD) &&
-                building.getClayCost(building.getLevel()) <= this.getResourceByType(ResourceType.CLAY) &&
-                building.getIronCost(building.getLevel()) <= this.getResourceByType(ResourceType.IRON);
+        boolean result = true;
+
+        for (ResourceType resourceType : ResourceType.values()) {
+            result = result && building.getResourceCost(building.getLevel(), resourceType) <= this.getResourceByType(resourceType);
+        }
+
+        return result;
     }
 }

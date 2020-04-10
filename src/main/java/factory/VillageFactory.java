@@ -1,9 +1,15 @@
+package factory;
+
 import model.ResourceType;
-import model.UnitStaticInfo;
+import model.unit.UnitStaticInfo;
 import model.Village;
-import model.WebSetup;
+import controller.WebSetup;
 import model.building.BuildingName;
 import org.openqa.selenium.By;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.awt.*;
 
 /**
  * Created by ronan
@@ -12,12 +18,14 @@ import org.openqa.selenium.By;
 public class VillageFactory {
     private WebSetup webSetup;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(VillageFactory.class);
+
     public VillageFactory(WebSetup websetup) {
         this.webSetup = websetup;
     }
 
     public Village buildVillage() throws InterruptedException {
-        Village village = new Village();
+        Village village = new Village(new Point(-1, -1), "villageName");
 
         for (BuildingName buildingName : BuildingName.values()) {
             village.addBuilding(buildingName, buildingName.getBuildingFactory().buildBuilding());
@@ -45,7 +53,7 @@ public class VillageFactory {
             village.addUnit(unitStaticInfo, Integer.parseInt(amountString));
         }
 
-        System.out.println("Elements charged");
+        LOGGER.info("Village {} created", village.getVillageName());
 
         return village;
     }

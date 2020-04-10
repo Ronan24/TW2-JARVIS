@@ -1,11 +1,16 @@
-package model;
+package controller;
 
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -27,6 +32,8 @@ import static controller.LoginController.waitForLoad;
 public class WebSetup {
     private static final WebSetup instance = new WebSetup();
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(WebSetup.class);
+
     public static final WebSetup getInstance() {
         return instance;
     }
@@ -39,7 +46,7 @@ public class WebSetup {
     private WebSetup() {
         String os = System.getProperty("os.name").toUpperCase();
         if (os.contains("LINUX")) {
-            System.out.println("NOT headless LInux");
+            LOGGER.info("NOT headless Linux");
             InputStream res = WebSetup.class.getResourceAsStream("/resources/chromedriver");
 
 
@@ -55,23 +62,23 @@ public class WebSetup {
 
                     Files.setPosixFilePermissions(target.toPath(), perms);
                 } catch (IOException e1) {
-                    e1.printStackTrace();
+                    LOGGER.error(e1.getMessage());
                 }
 
             if (!target.canExecute())
                 try {
                     throw new FileNotFoundException("chrome(linux) copy did not work!");
                 } catch (FileNotFoundException e1) {
-                    e1.printStackTrace();
+                    LOGGER.error(e1.getMessage());
                 }
             try {
                 System.setProperty("webdriver.chrome.driver", target.getCanonicalPath());
             } catch (IOException e1) {
-                e1.printStackTrace();
+                LOGGER.error(e1.getMessage());
             }
         }
         if (os.contains("WIN")) {
-            System.out.println("NOT headless WIndows");
+            LOGGER.info("NOT headless Windows");
             InputStream res = WebSetup.class.getResourceAsStream("/resources/chromedriver.exe");
 
             File target = new File(System.getProperty("java.io.tmpdir") + "chromedriver.exe");
@@ -80,18 +87,18 @@ public class WebSetup {
                 try {
                     Files.copy(res, target.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 } catch (IOException e1) {
-                    e1.printStackTrace();
+                    LOGGER.error(e1.getMessage());
                 }
             if (!target.canExecute())
                 try {
                     throw new FileNotFoundException("chrome.exe(win) copy did not work!");
                 } catch (FileNotFoundException e1) {
-                    e1.printStackTrace();
+                    LOGGER.error(e1.getMessage());
                 }
             try {
                 System.setProperty("webdriver.chrome.driver", target.getCanonicalPath());
             } catch (IOException e1) {
-                e1.printStackTrace();
+                LOGGER.error(e1.getMessage());
             }
 
         }
@@ -101,12 +108,12 @@ public class WebSetup {
         options.addArguments("--start-maximized");
         driver = new ChromeDriver(options);
 
-        System.out.println("Chrome driver instance");
+        LOGGER.info("Chrome driver instance");
         wait = new WebDriverWait(driver, 100);
         try {
             robot = new Robot();
         } catch (AWTException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage());
         }
     }
 
@@ -123,7 +130,7 @@ public class WebSetup {
         waitForLoad(driver);
     }
 
-    public void moveAndClickOn(By by){
+    public void moveAndClickOn(By by) {
         this.moveTo(by);
         this.clickOn(by);
     }
@@ -161,18 +168,18 @@ public class WebSetup {
         Thread.sleep(1000);
     }
 
-    public void clickToWorld(String worldName, String username) throws InterruptedException {
+    public void clickToWorld(String worldName, String username) {
 
         WebElement elem = null;
         List<WebElement> worlds = driver.findElements(By.partialLinkText(worldName.trim()));
-        if (worlds.size() > 0) {
-            System.out.println("world Available !");
+        if (!worlds.isEmpty()) {
+            LOGGER.info("world Available !");
 
             for (WebElement world : worlds) {
-                if (world.getAttribute("innerHTML").contains(username))
+                if (world.getAttribute("innerHTML").contains(username)
+                        || world.getAttribute("innerHTML").contains(username.toUpperCase())) {
                     elem = world;
-                else if (world.getAttribute("innerHTML").contains(username.toUpperCase()))
-                    elem = world;
+                }
             }
 
         }
@@ -182,28 +189,12 @@ public class WebSetup {
         ex.executeScript("arguments[0].click();", elem);
     }
 
-    public void hoverAndClick(WebElement elementToHover,WebElement elementToClick) {
+    public void hoverAndClick(WebElement elementToHover, WebElement elementToClick) {
         Actions action = new Actions(this.driver);
         action.moveToElement(elementToHover).click(elementToClick).build().perform();
     }
 
-    public void ByVisibleElement() {
-        System.setProperty("webdriver.chrome.driver", "G://chromedriver.exe");
-        driver = new ChromeDriver();
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-
-
-        //Launch the application
-        driver.get("http://demo.guru99.com/test/guru99home/");
-
-        //Find element by link text and store in variable "Element"
-        WebElement Element = driver.findElement(By.linkText("Linux"));
-
-        //This will scroll the page till the element is found
-        js.executeScript("arguments[0].scrollIntoView();", Element);
-    }
-
-    private void moveTo(By by){
+    private void moveTo(By by) {
         WebElement element = driver.findElement(by);
         Actions actions = new Actions(driver);
         actions.moveToElement(element);

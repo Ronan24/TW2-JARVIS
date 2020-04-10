@@ -1,5 +1,7 @@
 package model.building;
 
+import model.ResourceType;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,16 +43,11 @@ public class Building {
                 '}';
     }
 
-    public int getWoodCost(int level){
-        return this.buildingStaticInfoList.get(level).getWoodCost();
+    public int getResourceCost(int level, ResourceType resourceType) {
+        return this.buildingStaticInfoList.get(level).getResourceCost(resourceType);
     }
-    public int getClayCost(int level){
-        return this.buildingStaticInfoList.get(level).getClayCost();
-    }
-    public int getIronCost(int level){
-        return this.buildingStaticInfoList.get(level).getIronCost();
-    }
-    public int getDuration(int level){
+
+    public int getDuration(int level) {
         return this.buildingStaticInfoList.get(level).getDuration();
     }
 }

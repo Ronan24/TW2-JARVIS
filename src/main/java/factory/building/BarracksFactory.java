@@ -1,4 +1,8 @@
-package model.building;
+package factory.building;
+
+import model.building.Barracks;
+import model.building.Building;
+import model.building.BuildingName;
 
 /**
  * Created by ronan

@@ -1,42 +1,33 @@
 package model.building;
 
+import model.ResourceType;
+
+import java.util.EnumMap;
+import java.util.Map;
+
 /**
  * Created by ronan
  * on 05/04/2020.
  */
 public class BuildingStaticInfo {
-    private final int woodCost;
-    private final int clayCost;
-    private final int ironCost;
-    private final int provisionCost;
+    private Map<ResourceType, Integer> resourceMap;
     private final int duration;
     private final int hitPoints;
     private final int points;
 
     public BuildingStaticInfo(int woodCost, int clayCost, int ironCost, int provisionCost, int duration, int hitPoints, int points) {
-        this.woodCost = woodCost;
-        this.clayCost = clayCost;
-        this.ironCost = ironCost;
-        this.provisionCost = provisionCost;
+        this.resourceMap = new EnumMap<>(ResourceType.class);
+        this.resourceMap.put(ResourceType.WOOD, woodCost);
+        this.resourceMap.put(ResourceType.CLAY, clayCost);
+        this.resourceMap.put(ResourceType.IRON, ironCost);
+        this.resourceMap.put(ResourceType.PROVISION, provisionCost);
         this.duration = duration;
         this.hitPoints = hitPoints;
         this.points = points;
     }
 
-    public int getWoodCost() {
-        return woodCost;
-    }
-
-    public int getClayCost() {
-        return clayCost;
-    }
-
-    public int getIronCost() {
-        return ironCost;
-    }
-
-    public int getProvisionCost() {
-        return provisionCost;
+    public int getResourceCost(ResourceType resourceType) {
+        return this.resourceMap.get(resourceType);
     }
 
     public int getDuration() {
