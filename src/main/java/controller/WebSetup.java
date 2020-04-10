@@ -19,6 +19,7 @@ import java.nio.file.attribute.PosixFilePermission;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import static controller.LoginController.waitForLoad;
 
@@ -128,7 +129,7 @@ public class WebSetup {
     }
 
     public void clickOn(By by) {
-        WebElement element = this.wait.until(ExpectedConditions.elementToBeClickable(by));
+        WebElement element = this.wait.withTimeout(5, TimeUnit.SECONDS).until(ExpectedConditions.elementToBeClickable(by));
         element.click();
     }
 
