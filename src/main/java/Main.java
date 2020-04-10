@@ -1,13 +1,11 @@
 import controller.BasicController;
 import controller.LoginController;
+import controller.VillageController;
 import factory.VillageFactory;
 import model.Player;
-import model.unit.Army;
 import model.Village;
-import controller.WebSetup;
 import model.building.BuildingName;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
+import model.unit.Army;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ruler.RuleAttackBarbaric;
@@ -34,64 +32,40 @@ public class Main {
     private static String url;
     private static String worldName;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
         loadProperties();
 
-        WebSetup websetup = WebSetup.getInstance();
-        try {
-            LoginController.login(websetup, username,
-                    password, worldName, url);
-        } catch (InterruptedException e) {
-            LOGGER.error(e.getMessage());
-        }
+        LoginController.login(username, password, worldName, url);
 
-        VillageFactory villageFactory = new VillageFactory(websetup);
-        BasicController basicController = new BasicController(websetup);
+        VillageFactory villageFactory = new VillageFactory();
+        BasicController basicController = BasicController.getInstance();
+        VillageController villageController = VillageController.getInstance();
         RuleAttackBarbaric ruleAttackBarbaric = new RuleAttackBarbaric();
 
         Player player = new Player(basicController.getUserName(), basicController.getUserRank(), basicController.getUserPoints());
 
-        try {
-            basicController.goToMainMenu();
-        } catch (InterruptedException e) {
-            LOGGER.error(e.getMessage());
-        }
-
         while (true) {
+            Point villageLocation = basicController.getCurrentLocation();
+            Village village = player.getVillage(villageLocation);
 
-            Village village = null;
+            basicController.enterIntoVillage(villageLocation);
+
             try {
-                village = villageFactory.buildVillage();
-            } catch (InterruptedException e) {
-                try {
-                    basicController.goToMainMenu();
-                } catch (InterruptedException ex) {
-                    LOGGER.error(ex.getMessage());
+                if (village == null) {
+                    String villageName = basicController.getCurrentVillageName();
+                    village = villageFactory.buildVillage(villageLocation, villageName);
+                    player.addVillage(village);
+                } else {
+                    villageFactory.update(village);
                 }
-            }
 
-
-            try {
-
-
-                if (basicController.getQueueSize() == 0) {
+                if (village.getConstructionQueueSize() == 0) {
                     LOGGER.debug("We can construct");
                     Optional<BuildingName> toImprove = RuleImproveBuildings.findBestImprove(village);
 
                     if (toImprove.isPresent()) {
-
-                        basicController.goToBuilding(BuildingName.HEADQUARTER);
-                        try {
-                            websetup.moveAndClickOn(By.xpath("//div[@class='building-container building-" +
-                                    toImprove.get().getLabelIdFromMap() +
-                                    "']//div//div//span[@class='size-44x44 btn-upgrade btn-orange']"));
-                        } catch (NoSuchElementException e) {
-                            LOGGER.debug("{} not found ...", toImprove.get().getLabelIdFromMap());
-                        }
-
-                        Thread.sleep(1000);
-                        basicController.goBack();
+                        villageController.improveBuilding(toImprove.get());
                     } else {
                         LOGGER.debug("Not enough resources...");
                     }
@@ -101,15 +75,14 @@ public class Main {
 
                 Map<Point, Army> toAttackOptional = ruleAttackBarbaric.findBestBarbaricVillageToAttack(village);
 
-                for (Map.Entry<Point,Army> attackToPerform : toAttackOptional.entrySet()) {
+                for (Map.Entry<Point, Army> attackToPerform : toAttackOptional.entrySet()) {
                     Thread.sleep(1000);
                     basicController.attackVillage(attackToPerform.getKey(), village.getArmy(), attackToPerform.getValue());
 
                     Thread.sleep(1000);
                 }
 
-                websetup.clickOn(By.xpath("//a[@id='switch-village-next']"));
-                Thread.sleep(1000);
+                basicController.nextVillage();
             } catch (Exception e) {
                 LOGGER.error(e.getMessage());
             }

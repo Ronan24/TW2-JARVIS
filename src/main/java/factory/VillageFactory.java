@@ -1,60 +1,60 @@
 package factory;
 
+import controller.VillageController;
 import model.ResourceType;
-import model.unit.UnitStaticInfo;
 import model.Village;
-import controller.WebSetup;
+import model.building.Building;
 import model.building.BuildingName;
-import org.openqa.selenium.By;
+import model.unit.Army;
+import model.unit.UnitStaticInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.awt.*;
+import java.util.EnumMap;
+import java.util.Map;
 
 /**
  * Created by ronan
  * on 05/04/2020.
  */
 public class VillageFactory {
-    private WebSetup webSetup;
+    private VillageController villageController;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(VillageFactory.class);
 
-    public VillageFactory(WebSetup websetup) {
-        this.webSetup = websetup;
+    public VillageFactory() {
+        this.villageController = VillageController.getInstance();
     }
 
-    public Village buildVillage() throws InterruptedException {
-        Village village = new Village(new Point(-1, -1), "villageName");
-
-        for (BuildingName buildingName : BuildingName.values()) {
-            village.addBuilding(buildingName, buildingName.getBuildingFactory().buildBuilding());
-        }
-
-        for (ResourceType resourceType : ResourceType.values()) {
-            int amount = webSetup.readInteger(By.xpath("//body/div[@id='wrapper']/div[@id='interface-top']/div[@class='interface-wrapper']/div[@id='top-wrapper']/div[@id='resource-bar']/div[@id='resources-wrapper']/div[" +
-                    resourceType.getIndex() +
-                    "]/div[2]/div[1]"));
-
-            village.addResource(resourceType, amount);
-        }
-
-        for (UnitStaticInfo unitStaticInfo : UnitStaticInfo.values()) {
-            String amountString = webSetup.readValue(By.xpath("//div[@id='topinterface-right-wrapper']//li[" +
-                    unitStaticInfo.getIndex() +
-                    "]//div[1]//div[1]"));
-
-            if (amountString.isEmpty()) {
-                amountString = webSetup.readValue(By.xpath("//body/div[@id='wrapper']/div[@id='topinterface-right-wrapper']/div[@id='unit-bar']/ul/li[" +
-                        unitStaticInfo.getIndex() +
-                        "]/div[1]/div[1]"));
-            }
-
-            village.addUnit(unitStaticInfo, Integer.parseInt(amountString));
-        }
+    public Village buildVillage(Point villageLocation, String villageName) {
+        Village village = new Village(villageLocation, villageName);
+        this.update(village);
 
         LOGGER.info("Village {} created", village.getVillageName());
 
         return village;
+    }
+
+    public void update(Village village) {
+        Map<BuildingName, Building> villageBuildings = new EnumMap<>(BuildingName.class);
+        Map<ResourceType, Integer> resourceMap = new EnumMap<>(ResourceType.class);
+        Army army = new Army();
+
+        int constructionQueueSize = this.villageController.getQueueSize();
+
+        for (BuildingName buildingName : BuildingName.values()) {
+            villageBuildings.put(buildingName, buildingName.getBuildingFactory().buildBuilding());
+        }
+
+        for (ResourceType resourceType : ResourceType.values()) {
+            resourceMap.put(resourceType, this.villageController.getResourceByType(resourceType));
+        }
+
+        for (UnitStaticInfo unitStaticInfo : UnitStaticInfo.values()) {
+            army.addUnit(unitStaticInfo, this.villageController.getAmountUnits(unitStaticInfo));
+        }
+
+        village.update(villageBuildings, resourceMap, army, constructionQueueSize);
     }
 }

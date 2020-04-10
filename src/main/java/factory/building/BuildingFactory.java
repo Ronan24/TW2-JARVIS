@@ -1,10 +1,8 @@
 package factory.building;
 
-import controller.WebSetup;
+import controller.VillageController;
 import model.building.Building;
 import model.building.BuildingName;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 
 /**
  * Created by ronan
@@ -12,26 +10,19 @@ import org.openqa.selenium.NoSuchElementException;
  */
 public abstract class BuildingFactory {
 
-    private final WebSetup webSetup;
+    private final VillageController villageController;
 
     public BuildingFactory() {
-        this.webSetup = WebSetup.getInstance();
+        this.villageController = VillageController.getInstance();
     }
 
     public abstract Building buildBuilding();
 
     protected boolean getIsConstructedByBuildingName(BuildingName buildingName) {
-        try {
-            getLevelBuildingByBuilding(buildingName);
-            return true;
-        } catch (NoSuchElementException e) {
-            return false;
-        }
+        return this.villageController.getIsConstructedByBuildingName(buildingName);
     }
 
-    protected int getLevelBuildingByBuilding(BuildingName buildingName) throws NoSuchElementException {
-        return this.webSetup.readInteger(By.xpath("//body/div[@id='building-label-wrapper']/div[@id='label-" +
-                buildingName.getLabelIdFromMap() +
-                "']/a[@class='level-indicator']/span[@class='building-level']/span[1]"));
+    protected int getLevelBuildingByBuilding(BuildingName buildingName) {
+        return this.villageController.getLevelBuildingByBuilding(buildingName);
     }
 }

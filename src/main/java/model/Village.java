@@ -26,6 +26,7 @@ public class Village {
     private Point localisation;
     private String villageName;
     private Map<ResourceType, Integer> resourceMap;
+    private int constructionQueueSize;
 
     public Village(Point localisation, String villageName) {
         this.localisation = localisation;
@@ -33,6 +34,7 @@ public class Village {
         this.villageBuildings = new EnumMap<>(BuildingName.class);
         this.army = new Army();
         this.resourceMap = new EnumMap<>(ResourceType.class);
+        this.constructionQueueSize = 0;
     }
 
     public Point getLocalisation() {
@@ -49,6 +51,10 @@ public class Village {
 
     public Integer getUnitNumberByUnit(UnitStaticInfo unit) {
         return this.army.getUnitNumberByUnit(unit);
+    }
+
+    public int getConstructionQueueSize() {
+        return constructionQueueSize;
     }
 
     public void addBuilding(BuildingName buildingName, Building building) {
@@ -88,5 +94,12 @@ public class Village {
         }
 
         return result;
+    }
+
+    public void update(Map<BuildingName, Building> villageBuildings, Map<ResourceType, Integer> resourceMap, Army army, int constructionQueueSize) {
+        this.villageBuildings = villageBuildings;
+        this.resourceMap = resourceMap;
+        this.army = army;
+        this.constructionQueueSize = constructionQueueSize;
     }
 }

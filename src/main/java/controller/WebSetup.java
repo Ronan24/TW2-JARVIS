@@ -30,11 +30,11 @@ import static controller.LoginController.waitForLoad;
 
 
 public class WebSetup {
-    private static final WebSetup instance = new WebSetup();
-
     private static final Logger LOGGER = LoggerFactory.getLogger(WebSetup.class);
 
-    public static final WebSetup getInstance() {
+    private static final WebSetup instance = new WebSetup();
+
+    public static WebSetup getInstance() {
         return instance;
     }
 

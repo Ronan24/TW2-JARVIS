@@ -9,8 +9,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LoginController {
 
+    public static void login(String username, String password, String worldName, String url) throws InterruptedException {
+        WebSetup webSetup = WebSetup.getInstance();
 
-    public static void login(WebSetup webSetup, String username, String password, String worldName, String url) throws InterruptedException {
         webSetup.navigate(url);
 
         webSetup.sendKey(By.xpath("//input[@type='text']"), username);
@@ -18,14 +19,13 @@ public class LoginController {
         webSetup.submit(By.xpath("//input[@type='password']"));
 
         Thread.sleep(9000);
-
         webSetup.clickOn(By.cssSelector("div.play-form>button.button-login"));
 
         Thread.sleep(5000);
 
-
         webSetup.clickToWorld(worldName, username);
 
+        Thread.sleep(5000);
     }
 
     public static void waitForLoad(WebDriver driver) {
