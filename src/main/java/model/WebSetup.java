@@ -3,6 +3,7 @@ package model;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -121,6 +122,11 @@ public class WebSetup {
         waitForLoad(driver);
     }
 
+    public void moveAndClickOn(By by){
+        this.moveTo(by);
+        this.clickOn(by);
+    }
+
     public void clickOn(By by) {
         WebElement element = this.wait.until(ExpectedConditions.elementToBeClickable(by));
         element.click();
@@ -173,5 +179,33 @@ public class WebSetup {
 
         JavascriptExecutor ex = (JavascriptExecutor) driver;
         ex.executeScript("arguments[0].click();", elem);
+    }
+
+    public void hoverAndClick(WebElement elementToHover,WebElement elementToClick) {
+        Actions action = new Actions(this.driver);
+        action.moveToElement(elementToHover).click(elementToClick).build().perform();
+    }
+
+    public void ByVisibleElement() {
+        System.setProperty("webdriver.chrome.driver", "G://chromedriver.exe");
+        driver = new ChromeDriver();
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+
+        //Launch the application
+        driver.get("http://demo.guru99.com/test/guru99home/");
+
+        //Find element by link text and store in variable "Element"
+        WebElement Element = driver.findElement(By.linkText("Linux"));
+
+        //This will scroll the page till the element is found
+        js.executeScript("arguments[0].scrollIntoView();", Element);
+    }
+
+    private void moveTo(By by){
+        WebElement element = driver.findElement(by);
+        Actions actions = new Actions(driver);
+        actions.moveToElement(element);
+        actions.perform();
     }
 }

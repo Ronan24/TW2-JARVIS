@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Created by ronan
@@ -16,18 +17,10 @@ public class RuleImproveBuildings {
     public static Optional<BuildingName> findBestImprove(Village village) {
         Collection<Building> buildings = new ArrayList<>();
 
-        buildings.add(village.getBuildingByBuildingName(BuildingName.TIMBER_CAMP));
-        buildings.add(village.getBuildingByBuildingName(BuildingName.CLAY_PIT));
-        buildings.add(village.getBuildingByBuildingName(BuildingName.IRON_MINE));
-        buildings.add(village.getBuildingByBuildingName(BuildingName.HEADQUARTER));
-        buildings.add(village.getBuildingByBuildingName(BuildingName.FARM));
-        buildings.add(village.getBuildingByBuildingName(BuildingName.WAREHOUSE));
-//        buildings.add(village.getBuildingByBuildingName(BuildingName.BARRACKS));
-//        buildings.add(village.getBuildingByBuildingName(BuildingName.WALL));
-//        buildings.add(village.getBuildingByBuildingName(BuildingName.HOSPITAL));
-//        buildings.add(village.getBuildingByBuildingName(BuildingName.MARKET));
+        Collection<Building> finalBuildings = buildings;
+        Stream.of(BuildingName.values()).forEach(buildingName -> finalBuildings.add(village.getBuildingByBuildingName(buildingName)));
 
-        buildings = buildings.stream()
+        buildings = finalBuildings.stream()
                 .filter(Building::isConstruct)
                 .filter(building -> village.improveIsValid(building.getBuildingName()))
                 .collect(Collectors.toList());

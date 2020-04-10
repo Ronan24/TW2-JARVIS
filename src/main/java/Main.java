@@ -34,15 +34,36 @@ public class Main {
         try {
             LoginController login = new LoginController(websetup, USERNAME,
                     PASSWORD, WORLD_NAME, URL);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-            VillageFactory villageFactory = new VillageFactory(websetup);
-            BasicController basicController = new BasicController(websetup);
-            RuleAttackBarbaric ruleAttackBarbaric = new RuleAttackBarbaric();
+        VillageFactory villageFactory = new VillageFactory(websetup);
+        BasicController basicController = new BasicController(websetup);
+        RuleAttackBarbaric ruleAttackBarbaric = new RuleAttackBarbaric();
 
+        try {
             basicController.goToMainMenu();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-            while (true) {
-                Village village = villageFactory.buildVillage();
+        while (true) {
+
+            Village village = null;
+            try {
+                village = villageFactory.buildVillage();
+            } catch (InterruptedException e) {
+                try {
+                    basicController.goToMainMenu();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+
+            try {
+
 
                 if (basicController.getQueueSize() == 0) {
                     System.out.println("We can construct");
@@ -52,7 +73,7 @@ public class Main {
 
                         basicController.goToBuilding(BuildingName.HEADQUARTER);
                         try {
-                            websetup.clickOn(By.xpath("//div[@class='building-container building-" +
+                            websetup.moveAndClickOn(By.xpath("//div[@class='building-container building-" +
                                     toImprove.get().getLabelIdFromMap() +
                                     "']//div//div//span[@class='size-44x44 btn-upgrade btn-orange']"));
                         } catch (NoSuchElementException e) {
@@ -75,22 +96,14 @@ public class Main {
                     basicController.attackVillage(point, village.getArmy(), toAttackOptional.get(point));
 
                     Thread.sleep(1000);
-                    basicController.goBack();
                 }
 
-                Thread.sleep(60000);
-
-            }
-
-
-        } catch (InterruptedException v) {
-            System.out.println(v);
-            try {
-                //	atac.service.shutdownNow();//test needed
-                websetup.quitWithDelay();
+                websetup.clickOn(By.xpath("//a[@id='switch-village-next']"));
+                Thread.sleep(1000);
             } catch (Exception e) {
-                e.printStackTrace(System.out);
+                e.printStackTrace();
             }
+
         }
     }
 
