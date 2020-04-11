@@ -17,6 +17,10 @@ import java.util.stream.Stream;
  */
 public class RuleImproveBuildings {
     public static Optional<BuildingName> findBestImprove(Village village) {
+        if (village.getConstructionQueueSize() >= 2) {
+            return Optional.empty();
+        }
+
         Collection<Building> buildings = new ArrayList<>();
 
         Collection<Building> finalBuildings = buildings;

@@ -60,21 +60,14 @@ public class Main {
                     villageFactory.update(village);
                 }
 
-                if (village.getConstructionQueueSize() == 0) {
-                    LOGGER.debug("We can construct");
-                    Optional<BuildingName> toImprove = RuleImproveBuildings.findBestImprove(village);
-
-                    if (toImprove.isPresent()) {
-                        villageController.improveBuilding(toImprove.get());
-                    } else {
-                        LOGGER.debug("Not enough resources...");
-                    }
+                Optional<BuildingName> toImprove = RuleImproveBuildings.findBestImprove(village);
+                if (toImprove.isPresent()) {
+                    villageController.improveBuilding(toImprove.get());
                 } else {
-                    LOGGER.debug("Can't construct yet");
+                    LOGGER.debug("Not enough resources...");
                 }
 
                 Map<Point, Army> toAttackOptional = ruleAttackBarbaric.findBestBarbaricVillageToAttack(village);
-
                 for (Map.Entry<Point, Army> attackToPerform : toAttackOptional.entrySet()) {
                     Thread.sleep(1000);
                     basicController.attackVillage(attackToPerform.getKey(), village.getArmy(), attackToPerform.getValue());

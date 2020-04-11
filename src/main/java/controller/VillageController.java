@@ -4,11 +4,9 @@ import model.ResourceType;
 import model.building.BuildingName;
 import model.unit.UnitStaticInfo;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.awt.*;
 
 /**
  * Created by ronan
@@ -37,13 +35,13 @@ public class VillageController {
         this.webSetup.clickOn(By.xpath("//li[@class='context-menu-item open-screen']//div//div[@class='border']"));
     }
 
-    public void improveBuilding(BuildingName buildingName){
+    public void improveBuilding(BuildingName buildingName) {
         this.goToBuilding(BuildingName.HEADQUARTER);
         try {
             this.webSetup.moveAndClickOn(By.xpath("//div[@class='building-container building-" +
                     buildingName.getLabelIdFromMap() +
                     "']//div//div//span[@class='size-44x44 btn-upgrade btn-orange']"));
-        } catch (NoSuchElementException e) {
+        } catch (TimeoutException e) {
             LOGGER.debug("{} not found ...", buildingName.getLabelIdFromMap());
         } finally {
             this.webSetup.clickOn(By.xpath("//html//body//div//section//div//div//header//ul//li//a"));
@@ -53,13 +51,13 @@ public class VillageController {
     public int getQueueSize() {
         try {
             return this.webSetup.readInteger(By.xpath("//div[@class='in-queue building-queue short']"));
-        } catch (NoSuchElementException e) {
+        } catch (TimeoutException e) {
             try {
                 return this.webSetup.readInteger(By.xpath("//div[@class='in-queue building-queue medium']"));
-            } catch (NoSuchElementException e1) {
+            } catch (TimeoutException e1) {
                 try {
                     return this.webSetup.readInteger(By.xpath("//div[@class='in-queue building-queue long']"));
-                } catch (NoSuchElementException e2) {
+                } catch (TimeoutException e2) {
                     return 0;
                 }
             }
@@ -70,15 +68,22 @@ public class VillageController {
         try {
             getLevelBuildingByBuilding(buildingName);
             return true;
-        } catch (NoSuchElementException e) {
+        } catch (TimeoutException e) {
             return false;
         }
     }
 
     public int getLevelBuildingByBuilding(BuildingName buildingName) {
-        return this.webSetup.readInteger(By.xpath("//body/div[@id='building-label-wrapper']/div[@id='label-" +
-                buildingName.getLabelIdFromMap() +
-                "']/a[@class='level-indicator']/span[@class='building-level']/span[1]"));
+        try {
+            return this.webSetup.readInteger(By.xpath("//body/div[@id='building-label-wrapper']/div[@id='label-" +
+                    buildingName.getLabelIdFromMap() +
+                    "']/a[@class='level-indicator']/span[@class='building-level']/span[1]"));
+        } catch (TimeoutException e) {
+            String potentialLevelString = this.webSetup.readValue(By.xpath("//body/div[@id='building-label-wrapper']/div[@id='label-" +
+                    buildingName.getLabelIdFromMap() +
+                    "']/a[@class='level-indicator']/span[@class='building-level upgrading']/span[1]"));
+            return 1 + Integer.parseInt(potentialLevelString.split("\n")[0]);
+        }
     }
 
     public int getResourceByType(ResourceType resourceType) {

@@ -3,7 +3,7 @@ package controller;
 import model.unit.Army;
 import model.unit.UnitStaticInfo;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -84,9 +84,9 @@ public class BasicController {
     }
 
     public void enterIntoVillage(Point localisation) {
-        try{
+        try {
             this.webSetup.readValue(By.xpath("//div[@id='label-headquarter']//span[@class='building-name']"));
-        } catch (NoSuchElementException e) {
+        } catch (TimeoutException e) {
             this.goToVillage(localisation);
             this.webSetup.clickOn(By.xpath("//div[@class='menu-highlight']"));
         }
