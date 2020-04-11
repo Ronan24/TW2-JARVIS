@@ -141,7 +141,7 @@ public class WebSetup {
     }
 
     public void sendKey(By by, String key) {
-        WebElement element = this.driver.findElement(by);
+        WebElement element = this.wait.withTimeout(5, TimeUnit.SECONDS).until(ExpectedConditions.visibilityOfElementLocated(by));
         element.clear();
         element.sendKeys(key);
     }
@@ -151,7 +151,7 @@ public class WebSetup {
     }
 
     public String readValue(By by) {
-        WebElement element = this.driver.findElement(by);
+        WebElement element = this.wait.withTimeout(5, TimeUnit.SECONDS).until(ExpectedConditions.visibilityOfElementLocated(by));
         return element.getText();
     }
 
