@@ -54,7 +54,15 @@ public class VillageController {
         try {
             return this.webSetup.readInteger(By.xpath("//div[@class='in-queue building-queue short']"));
         } catch (NoSuchElementException e) {
-            return 0;
+            try {
+                return this.webSetup.readInteger(By.xpath("//div[@class='in-queue building-queue medium']"));
+            } catch (NoSuchElementException e1) {
+                try {
+                    return this.webSetup.readInteger(By.xpath("//div[@class='in-queue building-queue long']"));
+                } catch (NoSuchElementException e2) {
+                    return 0;
+                }
+            }
         }
     }
 
