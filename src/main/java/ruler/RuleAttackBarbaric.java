@@ -1,6 +1,7 @@
-import javafx.util.Pair;
-import model.Army;
-import model.UnitStaticInfo;
+package ruler;
+
+import model.unit.Army;
+import model.unit.UnitStaticInfo;
 import model.Village;
 
 import java.awt.*;

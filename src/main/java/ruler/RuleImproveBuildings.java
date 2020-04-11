@@ -1,3 +1,5 @@
+package ruler;
+
 import model.Village;
 import model.building.Building;
 import model.building.BuildingName;

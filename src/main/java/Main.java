@@ -1,11 +1,15 @@
 import controller.BasicController;
 import controller.LoginController;
-import model.Army;
+import controller.VillageController;
+import factory.VillageFactory;
+import model.Player;
 import model.Village;
-import model.WebSetup;
 import model.building.BuildingName;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
+import model.unit.Army;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import ruler.RuleAttackBarbaric;
+import ruler.RuleImproveBuildings;
 
 import java.awt.*;
 import java.io.FileInputStream;
@@ -21,87 +25,66 @@ import java.util.Properties;
  */
 public class Main {
 
-    private static String USERNAME;
-    private static String PASSWORD;
-    private static String URL;
-    private static String WORLD_NAME;
+    private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
 
-    public static void main(String[] args) {
+    private static String username;
+    private static String password;
+    private static String url;
+    private static String worldName;
+
+    public static void main(String[] args) throws InterruptedException {
 
         loadProperties();
 
-        WebSetup websetup = WebSetup.getInstance();
-        try {
-            LoginController login = new LoginController(websetup, USERNAME,
-                    PASSWORD, WORLD_NAME, URL);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        LoginController.login(username, password, worldName, url);
 
-        VillageFactory villageFactory = new VillageFactory(websetup);
-        BasicController basicController = new BasicController(websetup);
+        VillageFactory villageFactory = new VillageFactory();
+        BasicController basicController = BasicController.getInstance();
+        VillageController villageController = VillageController.getInstance();
         RuleAttackBarbaric ruleAttackBarbaric = new RuleAttackBarbaric();
 
-        try {
-            basicController.goToMainMenu();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Player player = new Player(basicController.getUserName(), basicController.getUserRank(), basicController.getUserPoints());
 
         while (true) {
+            Point villageLocation = basicController.getCurrentLocation();
+            Village village = player.getVillage(villageLocation);
 
-            Village village = null;
+            basicController.enterIntoVillage(villageLocation);
+
             try {
-                village = villageFactory.buildVillage();
-            } catch (InterruptedException e) {
-                try {
-                    basicController.goToMainMenu();
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
+                if (village == null) {
+                    String villageName = basicController.getCurrentVillageName();
+                    village = villageFactory.buildVillage(villageLocation, villageName);
+                    player.addVillage(village);
+                } else {
+                    villageFactory.update(village);
                 }
-            }
 
-
-            try {
-
-
-                if (basicController.getQueueSize() == 0) {
-                    System.out.println("We can construct");
+                if (village.getConstructionQueueSize() == 0) {
+                    LOGGER.debug("We can construct");
                     Optional<BuildingName> toImprove = RuleImproveBuildings.findBestImprove(village);
 
                     if (toImprove.isPresent()) {
-
-                        basicController.goToBuilding(BuildingName.HEADQUARTER);
-                        try {
-                            websetup.moveAndClickOn(By.xpath("//div[@class='building-container building-" +
-                                    toImprove.get().getLabelIdFromMap() +
-                                    "']//div//div//span[@class='size-44x44 btn-upgrade btn-orange']"));
-                        } catch (NoSuchElementException e) {
-                            System.out.println(toImprove.get().getLabelIdFromMap() + " not found ...");
-                        }
-
-                        Thread.sleep(1000);
-                        basicController.goBack();
+                        villageController.improveBuilding(toImprove.get());
                     } else {
-                        System.out.println("Not enough resources...");
+                        LOGGER.debug("Not enough resources...");
                     }
                 } else {
-                    System.out.println("Can't construct yet");
+                    LOGGER.debug("Can't construct yet");
                 }
 
                 Map<Point, Army> toAttackOptional = ruleAttackBarbaric.findBestBarbaricVillageToAttack(village);
 
-                for (Point point : toAttackOptional.keySet()) {
+                for (Map.Entry<Point, Army> attackToPerform : toAttackOptional.entrySet()) {
                     Thread.sleep(1000);
-                    basicController.attackVillage(point, village.getArmy(), toAttackOptional.get(point));
+                    basicController.attackVillage(attackToPerform.getKey(), village.getArmy(), attackToPerform.getValue());
 
                     Thread.sleep(1000);
                 }
 
-                websetup.clickOn(By.xpath("//a[@id='switch-village-next']"));
-                Thread.sleep(1000);
+                basicController.nextVillage();
             } catch (Exception e) {
-                e.printStackTrace();
+                LOGGER.error(e.getMessage());
             }
 
         }
@@ -116,13 +99,13 @@ public class Main {
             prop.load(input);
 
             // get the property value and print it out
-            URL = prop.getProperty("tw2.url");
-            USERNAME = prop.getProperty("tw2.user");
-            PASSWORD = prop.getProperty("tw2.password");
-            WORLD_NAME = prop.getProperty("tw2.world");
+            url = prop.getProperty("tw2.url");
+            username = prop.getProperty("tw2.user");
+            password = prop.getProperty("tw2.password");
+            worldName = prop.getProperty("tw2.world");
 
         } catch (IOException ex) {
-            ex.printStackTrace();
+            LOGGER.error(ex.getMessage());
         }
     }
 
