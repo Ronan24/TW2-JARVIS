@@ -9,12 +9,15 @@ This project, based on this [setup](https://github.com/spectral369/TW2-Bot) crea
    - Linux and windows support.  
     
 ## What can this program do:
-   * Can autolog users and chose the select world.  
-   * Can automaticaly upgrade the resource buildings if you have enough resources
+   * Can automatically login user and choose the world using a properties file.  
+   * Can automatically upgrade your buildings 
+        - Required have enough resources
+        - You must already have constructed the building
+        - The building choose will be the fastest to upgrade
    * Can farm barbaric villages.  
-        - Require barbaric town coordonates.  
-        - Require 20 spearmen for each attack
-        - Optional you can have farm cycles 
+        - Require barbaric town coordinates.  
+        - Require 20 spear men for each attack and optionally a knight
+   * Automatically collect the resource deposit missions
 ## How to launch :
   * Create a `config.properties` file into `src\main\resources\config.properties` with the following properties.
     * `tw2.user=<YOUR_USERNAME>`

@@ -45,6 +45,7 @@ public class Main {
         BasicController basicController = BasicController.getInstance();
         VillageController villageController = VillageController.getInstance();
         RuleAttackBarbaric ruleAttackBarbaric = new RuleAttackBarbaric();
+        ResourceDepositController resourceDepositController = ResourceDepositController.getInstance();
 
         Player player = new Player(basicController.getUserName(), basicController.getUserRank(), basicController.getUserPoints());
 
@@ -82,6 +83,8 @@ public class Main {
             } catch (Exception e) {
                 LOGGER.error(e.getMessage());
             }
+
+            resourceDepositController.execute();
 
         }
     }
