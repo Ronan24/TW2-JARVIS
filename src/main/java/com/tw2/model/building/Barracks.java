@@ -1,10 +1,15 @@
 package com.tw2.model.building;
 
+import com.tw2.model.unit.UnitStaticInfo;
+
+import java.util.EnumMap;
+
 /*
   Created by ronan
   on 05/04/2020.
  */
-public class Barracks extends Building {
+public class Barracks extends UnlockBuilding<UnitStaticInfo> {
+
     public Barracks(boolean isConstruct, int level) {
         super(BuildingName.BARRACKS, isConstruct, level);
         this.buildingStaticInfoList.add(new BuildingStaticInfo(400, 500, 600, 7, 60, 3, 16));
@@ -23,15 +28,25 @@ public class Barracks extends Building {
         this.buildingStaticInfoList.add(new BuildingStaticInfo(10300, 12100, 13800, 13, 1800, 10, 171));
         this.buildingStaticInfoList.add(new BuildingStaticInfo(12400, 14500, 16600, 15, 2700, 11, 205));
         this.buildingStaticInfoList.add(new BuildingStaticInfo(21000, 23000, 25000, 18, 3600, 13, 247));
-        this.buildingStaticInfoList.add(new BuildingStaticInfo(22000, 25000, 26000, 21, 2*3600, 14, 296));
-        this.buildingStaticInfoList.add(new BuildingStaticInfo(23000, 28000, 27000, 26, 3*3600, 15, 355));
-        this.buildingStaticInfoList.add(new BuildingStaticInfo(24000, 31000, 28000, 31, 4*3600, 17, 426));
-        this.buildingStaticInfoList.add(new BuildingStaticInfo(25000, 34000, 29000, 38, 5*3600, 18, 511));
-        this.buildingStaticInfoList.add(new BuildingStaticInfo(26000, 37000, 30000, 44, 6*3600, 20, 613));
-        this.buildingStaticInfoList.add(new BuildingStaticInfo(27000, 41000, 32000, 54, 7*3600, 22, 736));
-        this.buildingStaticInfoList.add(new BuildingStaticInfo(28000, 45000, 34000, 64, 8*3600, 24, 883));
-        this.buildingStaticInfoList.add(new BuildingStaticInfo(29000, 50000, 36000, 78, 9*3600, 27, 1060));
-        this.buildingStaticInfoList.add(new BuildingStaticInfo(30000, 55000, 38000, 92, 10*3600, 30, 1272));
+        this.buildingStaticInfoList.add(new BuildingStaticInfo(22000, 25000, 26000, 21, 2 * 3600, 14, 296));
+        this.buildingStaticInfoList.add(new BuildingStaticInfo(23000, 28000, 27000, 26, 3 * 3600, 15, 355));
+        this.buildingStaticInfoList.add(new BuildingStaticInfo(24000, 31000, 28000, 31, 4 * 3600, 17, 426));
+        this.buildingStaticInfoList.add(new BuildingStaticInfo(25000, 34000, 29000, 38, 5 * 3600, 18, 511));
+        this.buildingStaticInfoList.add(new BuildingStaticInfo(26000, 37000, 30000, 44, 6 * 3600, 20, 613));
+        this.buildingStaticInfoList.add(new BuildingStaticInfo(27000, 41000, 32000, 54, 7 * 3600, 22, 736));
+        this.buildingStaticInfoList.add(new BuildingStaticInfo(28000, 45000, 34000, 64, 8 * 3600, 24, 883));
+        this.buildingStaticInfoList.add(new BuildingStaticInfo(29000, 50000, 36000, 78, 9 * 3600, 27, 1060));
+        this.buildingStaticInfoList.add(new BuildingStaticInfo(30000, 55000, 38000, 92, 10 * 3600, 30, 1272));
+
+        this.unlockList = new EnumMap<>(UnitStaticInfo.class);
+        this.unlockList.put(UnitStaticInfo.SWORDSMAN, 3);
+        this.unlockList.put(UnitStaticInfo.AXE_FIGHTER, 5);
+        this.unlockList.put(UnitStaticInfo.ARCHER, 9);
+        this.unlockList.put(UnitStaticInfo.LIGHT_CAVALRY, 11);
+        this.unlockList.put(UnitStaticInfo.MOUNTED_ARCHER, 13);
+        this.unlockList.put(UnitStaticInfo.RAM, 15);
+        this.unlockList.put(UnitStaticInfo.CATAPULT, 17);
+        this.unlockList.put(UnitStaticInfo.HEAVY_CAVALRY, 21);
 
     }
 }

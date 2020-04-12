@@ -1,10 +1,16 @@
 package com.tw2.model.building;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /*
   Created by ronan
   on 05/04/2020.
  */
 public class Warehouse extends Building {
+
+    private List<Integer> maxCapacity;
+
     public Warehouse(boolean isConstruct, int level) {
         super(BuildingName.WAREHOUSE, isConstruct, level);
         this.buildingStaticInfoList.add(new BuildingStaticInfo(200, 190, 170, 0, 30, 	3, 6));
@@ -38,5 +44,42 @@ public class Warehouse extends Building {
         this.buildingStaticInfoList.add(new BuildingStaticInfo(42000, 40000, 35000, 0, 26*3600, 	43, 989));
         this.buildingStaticInfoList.add(new BuildingStaticInfo(50000, 48000, 43000, 0, 30*3600, 	48, 1187));
 
+        this.maxCapacity = new ArrayList<>();
+
+        this.maxCapacity.add(1000);
+        this.maxCapacity.add(1229);
+        this.maxCapacity.add(1512);
+        this.maxCapacity.add(1859);
+        this.maxCapacity.add(2285);
+        this.maxCapacity.add(2810);
+        this.maxCapacity.add(3454);
+        this.maxCapacity.add(4247);
+        this.maxCapacity.add(5222);
+        this.maxCapacity.add(6420);
+        this.maxCapacity.add(7893);
+        this.maxCapacity.add(9705);
+        this.maxCapacity.add(11932);
+        this.maxCapacity.add(14670);
+        this.maxCapacity.add(18037);
+        this.maxCapacity.add(22177);
+        this.maxCapacity.add(27266);
+        this.maxCapacity.add(33523);
+        this.maxCapacity.add(41217);
+        this.maxCapacity.add(50675);
+        this.maxCapacity.add(62305);
+        this.maxCapacity.add(76604);
+        this.maxCapacity.add(94184);
+        this.maxCapacity.add(115798);
+        this.maxCapacity.add(142373);
+        this.maxCapacity.add(175047);
+        this.maxCapacity.add(215219);
+        this.maxCapacity.add(264610);
+        this.maxCapacity.add(325337);
+        this.maxCapacity.add(400000);
+        
+    }
+
+    public int getMaxCapacity() {
+        return this.maxCapacity.get(getLevel() - 1);
     }
 }

@@ -9,7 +9,7 @@ import java.util.List;
  * Created by ronan
  * on 05/04/2020.
  */
-public class Building {
+public abstract class Building {
     private BuildingName buildingName;
     private boolean isConstruct;
     private int level;

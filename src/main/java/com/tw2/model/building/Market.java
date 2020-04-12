@@ -1,10 +1,16 @@
 package com.tw2.model.building;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /*
   Created by ronan
   on 05/04/2020.
  */
 public class Market extends Building {
+
+    private List<Integer> numberTraders;
+
     public Market(boolean isConstruct, int level) {
         super(BuildingName.MARKET, isConstruct, level);
         this.buildingStaticInfoList.add(new BuildingStaticInfo(100, 100, 100, 20, 300, 3, 10));
@@ -33,5 +39,37 @@ public class Market extends Building {
         this.buildingStaticInfoList.add(new BuildingStaticInfo(20300, 26700, 20300, 107, 45*1800, 27, 662));
         this.buildingStaticInfoList.add(new BuildingStaticInfo(25600, 34100, 25600, 126, 28*3600, 30, 795));
 
+        this.numberTraders = new ArrayList<>();
+
+        this.numberTraders.add(1);
+        this.numberTraders.add(2);
+        this.numberTraders.add(3);
+        this.numberTraders.add(4);
+        this.numberTraders.add(5);
+        this.numberTraders.add(6);
+        this.numberTraders.add(7);
+        this.numberTraders.add(8);
+        this.numberTraders.add(9);
+        this.numberTraders.add(10);
+        this.numberTraders.add(11);
+        this.numberTraders.add(14);
+        this.numberTraders.add(19);
+        this.numberTraders.add(26);
+        this.numberTraders.add(35);
+        this.numberTraders.add(46);
+        this.numberTraders.add(59);
+        this.numberTraders.add(74);
+        this.numberTraders.add(91);
+        this.numberTraders.add(110);
+        this.numberTraders.add(131);
+        this.numberTraders.add(154);
+        this.numberTraders.add(179);
+        this.numberTraders.add(206);
+        this.numberTraders.add(235);
+
+    }
+
+    public int getNumberTraders() {
+        return this.numberTraders.get(getLevel() - 1);
     }
 }

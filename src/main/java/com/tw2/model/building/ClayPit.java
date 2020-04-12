@@ -4,7 +4,7 @@ package com.tw2.model.building;
  * Created by ronan
  * on 05/04/2020.
  */
-public class ClayPit extends Building {
+public class ClayPit extends ResourceBuilding {
     public ClayPit(boolean isConstruct, int level) {
         super(BuildingName.CLAY_PIT, isConstruct, level);
         this.buildingStaticInfoList.add(new BuildingStaticInfo(50, 40, 30, 1, 30, 	3, 6));

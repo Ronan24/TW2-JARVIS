@@ -4,7 +4,7 @@ package com.tw2.model.building;
  * Created by ronan
  * on 05/04/2020.
  */
-public class TimberCamp extends Building{
+public class TimberCamp extends ResourceBuilding {
     public TimberCamp(boolean isConstruct, int level) {
         super(BuildingName.TIMBER_CAMP, isConstruct, level);
         this.buildingStaticInfoList.add(new BuildingStaticInfo(40, 50, 30, 1, 30, 3, 6));
@@ -27,15 +27,15 @@ public class TimberCamp extends Building{
         this.buildingStaticInfoList.add(new BuildingStaticInfo(2000, 2000, 1000, 8, 9000, 1, 133));
         this.buildingStaticInfoList.add(new BuildingStaticInfo(2000, 3000, 2000, 9, 10800, 1, 160));
         this.buildingStaticInfoList.add(new BuildingStaticInfo(3000, 3000, 2000, 10, 14400, 1, 192));
-        this.buildingStaticInfoList.add(new BuildingStaticInfo(3000, 4000, 2000, 12, 5*3600, 2, 230));
-        this.buildingStaticInfoList.add(new BuildingStaticInfo(4000, 5000, 3000, 14, 6*3600, 2, 276));
-        this.buildingStaticInfoList.add(new BuildingStaticInfo(5000, 6000, 4000, 16, 7*3600, 2, 331));
-        this.buildingStaticInfoList.add(new BuildingStaticInfo(6000, 8000, 5000, 19, 8*3600, 2, 397));
-        this.buildingStaticInfoList.add(new BuildingStaticInfo(8000, 10000, 6000, 21, 9*3600, 3, 477));
-        this.buildingStaticInfoList.add(new BuildingStaticInfo(10000, 12000, 7000, 24, 10*3600, 3, 572));
-        this.buildingStaticInfoList.add(new BuildingStaticInfo(12000, 16000, 9000, 29, 12*3600, 3, 687));
-        this.buildingStaticInfoList.add(new BuildingStaticInfo(16000, 19000, 12000, 33, 14*3600, 3, 824));
-        this.buildingStaticInfoList.add(new BuildingStaticInfo(19000, 24000, 15000, 38, 16*3600, 4, 989));
-        this.buildingStaticInfoList.add(new BuildingStaticInfo(24000, 30000, 18000, 43, 18*3600, 4, 1187));
+        this.buildingStaticInfoList.add(new BuildingStaticInfo(3000, 4000, 2000, 12, 5 * 3600, 2, 230));
+        this.buildingStaticInfoList.add(new BuildingStaticInfo(4000, 5000, 3000, 14, 6 * 3600, 2, 276));
+        this.buildingStaticInfoList.add(new BuildingStaticInfo(5000, 6000, 4000, 16, 7 * 3600, 2, 331));
+        this.buildingStaticInfoList.add(new BuildingStaticInfo(6000, 8000, 5000, 19, 8 * 3600, 2, 397));
+        this.buildingStaticInfoList.add(new BuildingStaticInfo(8000, 10000, 6000, 21, 9 * 3600, 3, 477));
+        this.buildingStaticInfoList.add(new BuildingStaticInfo(10000, 12000, 7000, 24, 10 * 3600, 3, 572));
+        this.buildingStaticInfoList.add(new BuildingStaticInfo(12000, 16000, 9000, 29, 12 * 3600, 3, 687));
+        this.buildingStaticInfoList.add(new BuildingStaticInfo(16000, 19000, 12000, 33, 14 * 3600, 3, 824));
+        this.buildingStaticInfoList.add(new BuildingStaticInfo(19000, 24000, 15000, 38, 16 * 3600, 4, 989));
+        this.buildingStaticInfoList.add(new BuildingStaticInfo(24000, 30000, 18000, 43, 18 * 3600, 4, 1187));
     }
 }
