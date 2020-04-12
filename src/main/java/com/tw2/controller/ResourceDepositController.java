@@ -45,7 +45,7 @@ public class ResourceDepositController {
     }
 
     private void acceptNextMission() {
-        this.webSetup.moveAndClickOn(By.xpath("//table[1]//tbody[1]//tr[1]//td[1]//div[4]//span[1]"));
+        this.webSetup.moveAndClickOn(By.xpath("//table[1]//tbody[1]//tr[1]//td[1]//div[4]//span[1]"), 10);
     }
 
     private Date getNextMissionsReload() {
@@ -71,7 +71,7 @@ public class ResourceDepositController {
 
         Calendar result = Calendar.getInstance();
         result.add(Calendar.HOUR, Integer.parseInt(coolDownStringList[0]));
-        result.add(Calendar.MINUTE, Integer.parseInt(coolDownStringList[1]));
+        result.add(Calendar.MINUTE, 1 + Integer.parseInt(coolDownStringList[1]));
         result.add(Calendar.SECOND, Integer.parseInt(coolDownStringList[2]));
 
         return result.getTime();

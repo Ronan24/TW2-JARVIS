@@ -40,9 +40,9 @@ public class VillageController {
         try {
             this.webSetup.moveAndClickOn(By.xpath("//div[@class='building-container building-" +
                     buildingName.getLabelIdFromMap() +
-                    "']//div//div//span[@class='size-44x44 btn-upgrade btn-orange']"));
+                    "']//div//div//span[@class='size-44x44 btn-upgrade btn-orange']"), 10);
         } catch (TimeoutException e) {
-            LOGGER.debug("{} not found ...", buildingName.getLabelIdFromMap());
+            LOGGER.info("{} not found ...", buildingName.getLabelIdFromMap());
         } finally {
             this.webSetup.clickOn(By.xpath("//html//body//div//section//div//div//header//ul//li//a"));
         }

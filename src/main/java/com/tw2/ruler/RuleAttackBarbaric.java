@@ -20,7 +20,7 @@ public class RuleAttackBarbaric {
         this.myBarbaricVillages.add(new Point(453,516));
         this.myBarbaricVillages.add(new Point(448,521));
         this.myBarbaricVillages.add(new Point(455,518));
-//        this.myBarbaricVillages.add(new Point(455,523));
+        this.myBarbaricVillages.add(new Point(452,519));
         this.myBarbaricVillages.add(new Point(453,529));
         this.myBarbaricVillages.add(new Point(454,529));
         this.myBarbaricVillages.add(new Point(456,526));

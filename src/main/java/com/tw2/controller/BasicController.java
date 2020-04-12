@@ -31,7 +31,7 @@ public class BasicController {
     public void attackVillage(Point point, Army army, Army armyToSend) throws InterruptedException {
         this.goToVillage(point);
 
-        webSetup.clickOn(By.xpath("//li[contains(@class,'context-menu-item custom-army')]//div//div[contains(@class,'border')]"));
+        webSetup.clickOn(By.xpath("//li[contains(@class,'context-menu-item custom-army')]//div//div[contains(@class,'border')]"), 10);
         Thread.sleep(2000);
 
         int index = 1;

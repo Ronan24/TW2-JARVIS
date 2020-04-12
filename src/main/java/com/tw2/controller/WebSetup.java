@@ -128,27 +128,47 @@ public class WebSetup {
     }
 
     public void moveAndClickOn(By by) {
+        this.moveAndClickOn(by, 5);
+    }
+
+    public void moveAndClickOn(By by, int seconds) {
         this.moveTo(by);
-        this.clickOn(by);
+        this.clickOn(by, seconds);
     }
 
     public void clickOn(By by) {
-        WebElement element = this.wait.withTimeout(5, TimeUnit.SECONDS).until(ExpectedConditions.elementToBeClickable(by));
+        this.clickOn(by, 5);
+    }
+
+    public void clickOn(By by, int seconds) {
+        WebElement element = this.wait.withTimeout(seconds, TimeUnit.SECONDS).until(ExpectedConditions.elementToBeClickable(by));
         element.click();
     }
 
     public void sendKey(By by, String key) {
-        WebElement element = this.wait.withTimeout(5, TimeUnit.SECONDS).until(ExpectedConditions.visibilityOfElementLocated(by));
+        this.sendKey(by, key, 5);
+    }
+
+    public void sendKey(By by, String key, int seconds) {
+        WebElement element = this.wait.withTimeout(seconds, TimeUnit.SECONDS).until(ExpectedConditions.visibilityOfElementLocated(by));
         element.clear();
         element.sendKeys(key);
     }
 
     public Integer readInteger(By by) {
-        return Integer.parseInt(this.readValue(by).replace(" ", ""));
+        return this.readInteger(by, 5);
+    }
+
+    public Integer readInteger(By by, int seconds) {
+        return Integer.parseInt(this.readValue(by, seconds).replace(" ", ""));
     }
 
     public String readValue(By by) {
-        WebElement element = this.wait.withTimeout(5, TimeUnit.SECONDS).until(ExpectedConditions.visibilityOfElementLocated(by));
+        return this.readValue(by, 5);
+    }
+
+    public String readValue(By by, int seconds) {
+        WebElement element = this.wait.withTimeout(seconds, TimeUnit.SECONDS).until(ExpectedConditions.visibilityOfElementLocated(by));
         return element.getText();
     }
 
