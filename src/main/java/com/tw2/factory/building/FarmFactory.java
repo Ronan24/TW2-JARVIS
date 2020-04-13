@@ -16,7 +16,7 @@ public class FarmFactory extends BuildingFactory {
     @Override
     public Building buildBuilding() {
         boolean isConstructed = super.getIsConstructedByBuildingName(BuildingName.FARM);
-        int level = isConstructed ? getLevelBuildingByBuilding(BuildingName.FARM) : -1;
+        int level = isConstructed ? getLevelBuildingByBuilding(BuildingName.FARM) : 0;
 
         return new Farm(isConstructed, level);
     }

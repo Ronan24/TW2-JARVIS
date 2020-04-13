@@ -27,7 +27,6 @@ public class RuleImproveBuildings {
         Stream.of(BuildingName.values()).forEach(buildingName -> finalBuildings.add(village.getBuildingByBuildingName(buildingName)));
 
         buildings = finalBuildings.stream()
-                .filter(Building::isConstruct)
                 .filter(building -> village.improveIsValid(building.getBuildingName()))
                 .collect(Collectors.toList());
 

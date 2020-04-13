@@ -16,7 +16,7 @@ public class TavernFactory extends BuildingFactory {
     @Override
     public Building buildBuilding() {
         boolean isConstructed = super.getIsConstructedByBuildingName(BuildingName.TAVERN);
-        int level = isConstructed ? getLevelBuildingByBuilding(BuildingName.TAVERN) : -1;
+        int level = isConstructed ? getLevelBuildingByBuilding(BuildingName.TAVERN) : 0;
 
         return new Tavern(isConstructed, level);
     }

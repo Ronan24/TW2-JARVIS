@@ -83,8 +83,11 @@ public class ResourceDepositController {
 
             try {
                 this.collectResource();
+                Thread.sleep(2000);
             } catch (TimeoutException e) {
                 LOGGER.debug("No mission to collect");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
 
             try {

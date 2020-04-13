@@ -16,7 +16,7 @@ public class HeadquarterFactory extends BuildingFactory {
     @Override
     public Building buildBuilding() {
         boolean isConstructed = super.getIsConstructedByBuildingName(BuildingName.HEADQUARTER);
-        int level = isConstructed ? getLevelBuildingByBuilding(BuildingName.HEADQUARTER) : -1;
+        int level = isConstructed ? getLevelBuildingByBuilding(BuildingName.HEADQUARTER) : 0;
 
         return new Headquarter(isConstructed, level);
     }

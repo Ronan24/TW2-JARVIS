@@ -16,7 +16,7 @@ public class TimberCampFactory extends BuildingFactory {
     @Override
     public Building buildBuilding() {
         boolean isConstructed = super.getIsConstructedByBuildingName(BuildingName.TIMBER_CAMP);
-        int level = isConstructed ? getLevelBuildingByBuilding(BuildingName.TIMBER_CAMP) : -1;
+        int level = isConstructed ? getLevelBuildingByBuilding(BuildingName.TIMBER_CAMP) : 0;
 
         return new TimberCamp(isConstructed, level);
     }

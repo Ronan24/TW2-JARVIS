@@ -146,7 +146,7 @@ public class WebSetup {
     }
 
     public void sendKey(By by, String key) {
-        this.sendKey(by, key, 5);
+        this.sendKey(by, key, 10);
     }
 
     public void sendKey(By by, String key, int seconds) {

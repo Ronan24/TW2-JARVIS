@@ -3,6 +3,7 @@ package com.tw2.model;
 
 import com.tw2.model.building.Building;
 import com.tw2.model.building.BuildingName;
+import com.tw2.model.building.Headquarter;
 import com.tw2.model.unit.Army;
 import com.tw2.model.unit.UnitStaticInfo;
 import org.slf4j.Logger;
@@ -91,6 +92,11 @@ public class Village {
 
         for (ResourceType resourceType : ResourceType.values()) {
             result = result && building.getResourceCost(building.getLevel(), resourceType) <= this.getResourceByType(resourceType);
+        }
+
+        if (this.getBuildingByBuildingName(buildingName).getLevel() == 0) {
+            Headquarter headquarter = (Headquarter) (this.getBuildingByBuildingName(BuildingName.HEADQUARTER));
+            result = headquarter.isUnlock(buildingName);
         }
 
         return result;

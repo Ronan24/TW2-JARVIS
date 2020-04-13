@@ -16,7 +16,7 @@ public class ClayPitFactory extends BuildingFactory {
     @Override
     public Building buildBuilding() {
         boolean isConstructed = super.getIsConstructedByBuildingName(BuildingName.CLAY_PIT);
-        int level = isConstructed ? getLevelBuildingByBuilding(BuildingName.CLAY_PIT) : -1;
+        int level = isConstructed ? getLevelBuildingByBuilding(BuildingName.CLAY_PIT) : 0;
 
         return new ClayPit(isConstructed, level);
     }

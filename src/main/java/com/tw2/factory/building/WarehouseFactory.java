@@ -16,7 +16,7 @@ public class WarehouseFactory extends BuildingFactory {
     @Override
     public Building buildBuilding() {
         boolean isConstructed = super.getIsConstructedByBuildingName(BuildingName.WAREHOUSE);
-        int level = isConstructed ? getLevelBuildingByBuilding(BuildingName.WAREHOUSE) : -1;
+        int level = isConstructed ? getLevelBuildingByBuilding(BuildingName.WAREHOUSE) : 0;
 
         return new Warehouse(isConstructed, level);
     }

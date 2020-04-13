@@ -16,7 +16,7 @@ public class IronMineFactory extends BuildingFactory {
     @Override
     public Building buildBuilding() {
         boolean isConstructed = super.getIsConstructedByBuildingName(BuildingName.IRON_MINE);
-        int level = isConstructed ? getLevelBuildingByBuilding(BuildingName.IRON_MINE) : -1;
+        int level = isConstructed ? getLevelBuildingByBuilding(BuildingName.IRON_MINE) : 0;
 
         return new IronMine(isConstructed, level);
     }

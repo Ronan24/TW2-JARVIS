@@ -16,7 +16,7 @@ public class HospitalFactory extends BuildingFactory {
     @Override
     public Building buildBuilding() {
         boolean isConstructed = super.getIsConstructedByBuildingName(BuildingName.HOSPITAL);
-        int level = isConstructed ? getLevelBuildingByBuilding(BuildingName.HOSPITAL) : -1;
+        int level = isConstructed ? getLevelBuildingByBuilding(BuildingName.HOSPITAL) : 0;
 
         return new Hospital(isConstructed, level);
     }
