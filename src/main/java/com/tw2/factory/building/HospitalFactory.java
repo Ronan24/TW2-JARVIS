@@ -17,7 +17,8 @@ public class HospitalFactory extends BuildingFactory {
     public Building buildBuilding() {
         boolean isConstructed = super.getIsConstructedByBuildingName(BuildingName.HOSPITAL);
         int level = isConstructed ? getLevelBuildingByBuilding(BuildingName.HOSPITAL) : 0;
+        int levelUpGoing = getLevelUpGoingBuildingByBuilding(BuildingName.HOSPITAL);
 
-        return new Hospital(isConstructed, level);
+        return new Hospital(isConstructed, level, levelUpGoing);
     }
 }

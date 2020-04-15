@@ -5,8 +5,8 @@ package com.tw2.model.building;
   on 05/04/2020.
  */
 public class Tavern extends Building {
-    public Tavern(boolean isConstruct, int level) {
-        super(BuildingName.TAVERN, isConstruct, level);
+    public Tavern(boolean isConstruct, int level, int levelUpGoing) {
+        super(BuildingName.TAVERN, isConstruct, level, levelUpGoing);
         this.buildingStaticInfoList.add(new BuildingStaticInfo(150, 100, 110, 2, 300, 3, 15));
         this.buildingStaticInfoList.add(new BuildingStaticInfo(200, 130, 140, 3, 600, 3, 18));
         this.buildingStaticInfoList.add(new BuildingStaticInfo(250, 170, 180, 3, 1200, 4, 22));

@@ -31,7 +31,7 @@ public class RuleImproveBuildings {
                 .collect(Collectors.toList());
 
         Optional<Building> buildingOptional = buildings.stream()
-                .min(Comparator.comparingInt(value -> value.getDuration(value.getLevel())));
+                .min(Comparator.comparingInt(value -> value.getDuration(value.getLevel() + value.getLevelUpGoing() + 1)));
 
         return buildingOptional.map(Building::getBuildingName);
     }

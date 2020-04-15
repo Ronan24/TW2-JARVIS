@@ -77,12 +77,12 @@ public class VillageController {
         try {
             return this.webSetup.readInteger(By.xpath("//body/div[@id='building-label-wrapper']/div[@id='label-" +
                     buildingName.getLabelIdFromMap() +
-                    "']/a[@class='level-indicator']/span[@class='building-level']/span[1]"));
+                    "']/a[@class='level-indicator']/span[@class='building-level']/span[1]"), 2);
         } catch (TimeoutException e) {
             String potentialLevelString = this.webSetup.readValue(By.xpath("//body/div[@id='building-label-wrapper']/div[@id='label-" +
                     buildingName.getLabelIdFromMap() +
                     "']/a[@class='level-indicator']/span[@class='building-level upgrading']/span[1]"));
-            return 1 + Integer.parseInt(potentialLevelString.split("\n")[0]);
+            return Integer.parseInt(potentialLevelString.split("\n")[0]);
         }
     }
 
@@ -104,5 +104,15 @@ public class VillageController {
         }
 
         return Integer.parseInt(amountString);
+    }
+
+    public int getLevelUpGoingByBuildingName(BuildingName buildingName) {
+        try {
+            return Integer.parseInt(this.webSetup.readValue(By.xpath("//body/div[@id='building-label-wrapper']/div[@id='label-" +
+                    buildingName.getLabelIdFromMap() +
+                    "']/a[@class='level-indicator']/span[@class='building-level upgrading']/span[1]/span[1]"), 2).split("\\+")[1]);
+        } catch (TimeoutException e){
+            return 0;
+        }
     }
 }

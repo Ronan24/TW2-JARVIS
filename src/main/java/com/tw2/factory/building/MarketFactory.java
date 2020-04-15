@@ -17,7 +17,8 @@ public class MarketFactory extends BuildingFactory {
     public Building buildBuilding() {
         boolean isConstructed = super.getIsConstructedByBuildingName(BuildingName.MARKET);
         int level = isConstructed ? getLevelBuildingByBuilding(BuildingName.MARKET) : 0;
+        int levelUpGoing = getLevelUpGoingBuildingByBuilding(BuildingName.MARKET);
 
-        return new Market(isConstructed, level);
+        return new Market(isConstructed, level, levelUpGoing);
     }
 }

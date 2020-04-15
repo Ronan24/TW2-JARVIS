@@ -10,8 +10,8 @@ import java.util.EnumMap;
  */
 public class Barracks extends UnlockBuilding<UnitStaticInfo> {
 
-    public Barracks(boolean isConstruct, int level) {
-        super(BuildingName.BARRACKS, isConstruct, level);
+    public Barracks(boolean isConstruct, int level, int levelUpGoing) {
+        super(BuildingName.BARRACKS, isConstruct, level, levelUpGoing);
         this.buildingStaticInfoList.add(new BuildingStaticInfo(400, 500, 600, 7, 60, 3, 16));
         this.buildingStaticInfoList.add(new BuildingStaticInfo(480, 600, 720, 1, 150, 3, 19));
         this.buildingStaticInfoList.add(new BuildingStaticInfo(580, 720, 860, 2, 240, 4, 23));

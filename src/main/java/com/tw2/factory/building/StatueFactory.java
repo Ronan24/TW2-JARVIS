@@ -17,7 +17,8 @@ public class StatueFactory extends BuildingFactory {
     public Building buildBuilding() {
         boolean isConstructed = super.getIsConstructedByBuildingName(BuildingName.STATUE);
         int level = isConstructed ? getLevelBuildingByBuilding(BuildingName.STATUE) : 0;
+        int levelUpGoing = getLevelUpGoingBuildingByBuilding(BuildingName.STATUE);
 
-        return new Statue(isConstructed, level);
+        return new Statue(isConstructed, level, levelUpGoing);
     }
 }

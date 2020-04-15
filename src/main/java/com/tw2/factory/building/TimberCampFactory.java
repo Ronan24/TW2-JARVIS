@@ -17,7 +17,8 @@ public class TimberCampFactory extends BuildingFactory {
     public Building buildBuilding() {
         boolean isConstructed = super.getIsConstructedByBuildingName(BuildingName.TIMBER_CAMP);
         int level = isConstructed ? getLevelBuildingByBuilding(BuildingName.TIMBER_CAMP) : 0;
+        int levelUpGoing = getLevelUpGoingBuildingByBuilding(BuildingName.TIMBER_CAMP);
 
-        return new TimberCamp(isConstructed, level);
+        return new TimberCamp(isConstructed, level, levelUpGoing);
     }
 }

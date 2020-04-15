@@ -11,8 +11,8 @@ public class Farm extends Building {
 
     private List<Integer> maxPopulationList;
 
-    public Farm(boolean isConstruct, int level) {
-        super(BuildingName.FARM, isConstruct, level);
+    public Farm(boolean isConstruct, int level, int levelUpGoing) {
+        super(BuildingName.FARM, isConstruct, level, levelUpGoing);
         this.buildingStaticInfoList.add(new BuildingStaticInfo(40, 50, 30, 0, 60, 5, 5));
         this.buildingStaticInfoList.add(new BuildingStaticInfo(50, 70, 40, 0, 90, 6, 6));
         this.buildingStaticInfoList.add(new BuildingStaticInfo(70, 90, 50, 0, 120, 6, 7));

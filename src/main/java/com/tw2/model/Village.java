@@ -91,7 +91,7 @@ public class Village {
         boolean result = true;
 
         for (ResourceType resourceType : ResourceType.values()) {
-            result = result && building.getResourceCost(building.getLevel(), resourceType) <= this.getResourceByType(resourceType);
+            result = result && building.getResourceCost(building.getLevel() + building.getLevelUpGoing() + 1, resourceType) <= this.getResourceByType(resourceType);
         }
 
         if (this.getBuildingByBuildingName(buildingName).getLevel() == 0) {

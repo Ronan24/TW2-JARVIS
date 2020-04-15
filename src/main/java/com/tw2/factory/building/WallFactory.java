@@ -17,7 +17,8 @@ public class WallFactory extends BuildingFactory {
     public Building buildBuilding() {
         boolean isConstructed = super.getIsConstructedByBuildingName(BuildingName.WALL);
         int level = isConstructed ? getLevelBuildingByBuilding(BuildingName.WALL) : 0;
+        int levelUpGoing = getLevelUpGoingBuildingByBuilding(BuildingName.WALL);
 
-        return new Wall(isConstructed, level);
+        return new Wall(isConstructed, level, levelUpGoing);
     }
 }

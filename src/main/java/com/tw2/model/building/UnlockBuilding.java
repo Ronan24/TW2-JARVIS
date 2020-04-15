@@ -10,8 +10,8 @@ public abstract class UnlockBuilding<E extends Enum> extends Building {
 
     protected Map<E, Integer> unlockList;
 
-    public UnlockBuilding(BuildingName buildingName, boolean isConstruct, int level) {
-        super(buildingName, isConstruct, level);
+    public UnlockBuilding(BuildingName buildingName, boolean isConstruct, int level, int levelUpGoing) {
+        super(buildingName, isConstruct, level, levelUpGoing);
     }
 
     public int getLevelToUnlock(E e) {

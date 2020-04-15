@@ -5,8 +5,8 @@ package com.tw2.model.building;
   on 05/04/2020.
  */
 public class Wall extends Building {
-    public Wall(boolean isConstruct, int level) {
-        super(BuildingName.WALL, isConstruct, level);
+    public Wall(boolean isConstruct, int level, int levelUpGoing) {
+        super(BuildingName.WALL, isConstruct, level, levelUpGoing);
         this.buildingStaticInfoList.add(new BuildingStaticInfo(50, 100, 20, 1, 150, 3, 8));
         this.buildingStaticInfoList.add(new BuildingStaticInfo(60, 130, 30, 1, 300, 3, 10));
         this.buildingStaticInfoList.add(new BuildingStaticInfo(80, 160, 30, 1, 900, 4, 12));

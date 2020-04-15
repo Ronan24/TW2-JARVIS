@@ -8,8 +8,8 @@ import java.util.EnumMap;
  */
 public class Headquarter extends UnlockBuilding<BuildingName> {
 
-    public Headquarter(boolean isConstruct, int level) {
-        super(BuildingName.HEADQUARTER, isConstruct, level);
+    public Headquarter(boolean isConstruct, int level, int levelUpGoing) {
+        super(BuildingName.HEADQUARTER, isConstruct, level, levelUpGoing);
         this.buildingStaticInfoList.add(new BuildingStaticInfo(0, 0, 0, 1, 30, 3, 10));
         this.buildingStaticInfoList.add(new BuildingStaticInfo(700, 750, 650, 1, 120, 3, 12));
         this.buildingStaticInfoList.add(new BuildingStaticInfo(1000, 1300, 900, 1, 180, 4, 14));

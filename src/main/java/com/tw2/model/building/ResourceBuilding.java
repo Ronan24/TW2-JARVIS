@@ -10,8 +10,8 @@ import java.util.List;
 public abstract class ResourceBuilding extends Building {
     private List<Integer> productionPerHourList;
 
-    public ResourceBuilding(BuildingName buildingName, boolean isConstruct, int level) {
-        super(buildingName, isConstruct, level);
+    public ResourceBuilding(BuildingName buildingName, boolean isConstruct, int level, int levelUpGoing) {
+        super(buildingName, isConstruct, level, levelUpGoing);
         this.productionPerHourList = new ArrayList<>();
 
         this.productionPerHourList.add(120);

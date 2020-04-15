@@ -17,7 +17,8 @@ public class TavernFactory extends BuildingFactory {
     public Building buildBuilding() {
         boolean isConstructed = super.getIsConstructedByBuildingName(BuildingName.TAVERN);
         int level = isConstructed ? getLevelBuildingByBuilding(BuildingName.TAVERN) : 0;
+        int levelUpGoing = getLevelUpGoingBuildingByBuilding(BuildingName.TAVERN);
 
-        return new Tavern(isConstructed, level);
+        return new Tavern(isConstructed, level, levelUpGoing);
     }
 }

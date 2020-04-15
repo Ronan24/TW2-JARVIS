@@ -17,7 +17,8 @@ public class IronMineFactory extends BuildingFactory {
     public Building buildBuilding() {
         boolean isConstructed = super.getIsConstructedByBuildingName(BuildingName.IRON_MINE);
         int level = isConstructed ? getLevelBuildingByBuilding(BuildingName.IRON_MINE) : 0;
+        int levelUpGoing = getLevelUpGoingBuildingByBuilding(BuildingName.IRON_MINE);
 
-        return new IronMine(isConstructed, level);
+        return new IronMine(isConstructed, level, levelUpGoing);
     }
 }

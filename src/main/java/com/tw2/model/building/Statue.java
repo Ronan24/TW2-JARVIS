@@ -5,8 +5,8 @@ package com.tw2.model.building;
   on 05/04/2020.
  */
 public class Statue extends Building {
-    public Statue(boolean isConstruct, int level) {
-        super(BuildingName.STATUE, isConstruct, level);
+    public Statue(boolean isConstruct, int level, int levelUpGoing) {
+        super(BuildingName.STATUE, isConstruct, level, levelUpGoing);
         this.buildingStaticInfoList.add(new BuildingStaticInfo(100, 100, 200, 0, 120, 3, 6));
         this.buildingStaticInfoList.add(new BuildingStaticInfo(500, 500, 1000, 0, 600, 3, 7));
         this.buildingStaticInfoList.add(new BuildingStaticInfo(2000, 2000, 4000, 0, 3600, 4, 9));

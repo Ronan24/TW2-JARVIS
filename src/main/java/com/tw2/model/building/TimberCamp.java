@@ -5,8 +5,8 @@ package com.tw2.model.building;
  * on 05/04/2020.
  */
 public class TimberCamp extends ResourceBuilding {
-    public TimberCamp(boolean isConstruct, int level) {
-        super(BuildingName.TIMBER_CAMP, isConstruct, level);
+    public TimberCamp(boolean isConstruct, int level, int levelUpGoing) {
+        super(BuildingName.TIMBER_CAMP, isConstruct, level, levelUpGoing);
         this.buildingStaticInfoList.add(new BuildingStaticInfo(40, 50, 30, 1, 30, 3, 6));
         this.buildingStaticInfoList.add(new BuildingStaticInfo(50, 60, 40, 1, 60, 3, 7));
         this.buildingStaticInfoList.add(new BuildingStaticInfo(60, 80, 50, 1, 90, 4, 9));
