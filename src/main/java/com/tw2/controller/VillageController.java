@@ -103,7 +103,7 @@ public class VillageController {
                     "]/div[1]/div[1]"));
         }
 
-        return Integer.parseInt(amountString);
+        return Integer.parseInt(amountString.replace(" ", ""));
     }
 
     public int getLevelUpGoingByBuildingName(BuildingName buildingName) {
