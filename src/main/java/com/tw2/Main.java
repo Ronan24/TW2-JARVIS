@@ -9,6 +9,7 @@ import com.tw2.model.Player;
 import com.tw2.model.Village;
 import com.tw2.model.building.BuildingName;
 import com.tw2.model.unit.Army;
+import com.tw2.ruler.RuleRecruitUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.tw2.ruler.RuleAttackBarbaric;
@@ -45,6 +46,7 @@ public class Main {
         BasicController basicController = BasicController.getInstance();
         VillageController villageController = VillageController.getInstance();
         RuleAttackBarbaric ruleAttackBarbaric = new RuleAttackBarbaric();
+        RuleRecruitUnit ruleRecruitUnit = new RuleRecruitUnit();
         ResourceDepositController resourceDepositController = ResourceDepositController.getInstance();
 
         Player player = new Player(basicController.getUserName(), basicController.getUserRank(), basicController.getUserPoints());
@@ -53,9 +55,9 @@ public class Main {
             Point villageLocation = basicController.getCurrentLocation();
             Village village = player.getVillage(villageLocation);
 
-            basicController.enterIntoVillage(villageLocation);
 
             try {
+                basicController.enterIntoVillage(villageLocation);
                 if (village == null) {
                     String villageName = basicController.getCurrentVillageName();
                     village = villageFactory.buildVillage(villageLocation, villageName);
@@ -64,12 +66,8 @@ public class Main {
                     villageFactory.update(village);
                 }
 
-                Optional<BuildingName> toImprove = RuleImproveBuildings.findBestImprove(village);
-                if (toImprove.isPresent()) {
-                    villageController.improveBuilding(toImprove.get());
-                } else {
-                    LOGGER.debug("Not enough resources...");
-                }
+                RuleImproveBuildings.findBestImprove(village).ifPresent(villageController::improveBuilding);
+                ruleRecruitUnit.findArmyToRecruit(village).ifPresent(villageController::recruitArmy);
 
                 Map<Point, Army> toAttackOptional = ruleAttackBarbaric.findBestBarbaricVillageToAttack(village);
                 for (Map.Entry<Point, Army> attackToPerform : toAttackOptional.entrySet()) {
@@ -81,7 +79,7 @@ public class Main {
 
                 basicController.nextVillage();
             } catch (Exception e) {
-                LOGGER.error(e.getMessage());
+                LOGGER.error(e.getLocalizedMessage());
             }
 
             resourceDepositController.execute();

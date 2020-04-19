@@ -136,6 +136,11 @@ public class WebSetup {
         this.clickOn(by, seconds);
     }
 
+    public void moveAndSendKey(By by, String key) {
+        this.moveTo(by);
+        this.sendKey(by, key);
+    }
+
     public void clickOn(By by) {
         this.clickOn(by, 5);
     }
@@ -164,7 +169,7 @@ public class WebSetup {
     }
 
     public String readValue(By by) {
-        return this.readValue(by, 5);
+        return this.readValue(by, 10);
     }
 
     public String readValue(By by, int seconds) {

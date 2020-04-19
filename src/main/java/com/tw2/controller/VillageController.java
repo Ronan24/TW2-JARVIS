@@ -2,6 +2,8 @@ package com.tw2.controller;
 
 import com.tw2.model.ResourceType;
 import com.tw2.model.building.BuildingName;
+import com.tw2.model.unit.Army;
+import com.tw2.model.unit.UnitCategory;
 import com.tw2.model.unit.UnitStaticInfo;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
@@ -46,6 +48,37 @@ public class VillageController {
         } finally {
             this.webSetup.clickOn(By.xpath("//html//body//div//section//div//div//header//ul//li//a"));
         }
+    }
+
+    public void recruitArmy(Army army) {
+        this.goToBuilding(BuildingName.BARRACKS);
+
+        for (UnitStaticInfo unitType : UnitStaticInfo.values()) {
+            if (army.getUnitNumberByUnit(unitType) != 0){
+                String prefix;
+
+                switch (unitType.getUnitCategory()){
+                    case DEFENSIVE:
+                        prefix = "//div//div//div//div//div//div//div//div//div[1]//div[2]//div[1]//label[" +
+                                unitType.getIndexRecruit() +
+                                "]";
+                        break;
+                    case ATTACK:
+                        prefix = "//body//div//div//div//div[2]//div[2]//div[1]//label[" +
+                                unitType.getIndexRecruit() +
+                                "]";
+                        break;
+                    default:
+                        throw new IllegalArgumentException("Invalid unit to recruit : " + unitType);
+                }
+
+                this.webSetup.moveAndClickOn(By.xpath(prefix + "//table[1]//tbody[1]//tr[1]"), 10);
+                this.webSetup.moveAndSendKey(By.xpath(prefix + "//table[1]//tbody[1]//tr[3]//td[1]//input[1]"), "10");
+            }
+        }
+
+        this.webSetup.clickOn(By.xpath("//a[contains(@class,'btn-border btn-green btn-start-recruit')]"));
+        this.webSetup.clickOn(By.xpath("//html//body//div//section//div//div//header//ul//li//a"));
     }
 
     public int getQueueSize() {
