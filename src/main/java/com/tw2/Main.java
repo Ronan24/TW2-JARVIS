@@ -9,6 +9,7 @@ import com.tw2.model.Player;
 import com.tw2.model.Village;
 import com.tw2.model.unit.Army;
 import com.tw2.ruler.RuleAttackBarbaric;
+import com.tw2.ruler.RuleImproveBuildings;
 import com.tw2.ruler.RuleRecruitUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
