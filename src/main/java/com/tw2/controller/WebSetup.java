@@ -76,7 +76,7 @@ public class WebSetup {
         }
         if (os.contains("WIN")) {
             LOGGER.info("NOT headless Windows");
-            InputStream res = WebSetup.class.getResourceAsStream("/resources/chromedriver.exe");
+            InputStream res = WebSetup.class.getResourceAsStream("/chromedriver.exe");
 
             File target = new File(System.getProperty("java.io.tmpdir") + "chromedriver.exe");
 

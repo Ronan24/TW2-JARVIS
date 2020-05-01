@@ -7,20 +7,17 @@ import com.tw2.controller.VillageController;
 import com.tw2.factory.VillageFactory;
 import com.tw2.model.Player;
 import com.tw2.model.Village;
-import com.tw2.model.building.BuildingName;
 import com.tw2.model.unit.Army;
+import com.tw2.ruler.RuleAttackBarbaric;
 import com.tw2.ruler.RuleRecruitUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.tw2.ruler.RuleAttackBarbaric;
-import com.tw2.ruler.RuleImproveBuildings;
 
 import java.awt.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Properties;
 
 /**
@@ -52,11 +49,10 @@ public class Main {
         Player player = new Player(basicController.getUserName(), basicController.getUserRank(), basicController.getUserPoints());
 
         while (true) {
-            Point villageLocation = basicController.getCurrentLocation();
-            Village village = player.getVillage(villageLocation);
-
-
             try {
+                Point villageLocation = basicController.getCurrentLocation();
+                Village village = player.getVillage(villageLocation);
+
                 basicController.enterIntoVillage(villageLocation);
                 if (village == null) {
                     String villageName = basicController.getCurrentVillageName();
@@ -78,11 +74,14 @@ public class Main {
                 }
 
                 basicController.nextVillage();
+
+                resourceDepositController.execute();
+
+
             } catch (Exception e) {
                 LOGGER.error(e.getLocalizedMessage());
+                Thread.sleep(10000);
             }
-
-            resourceDepositController.execute();
 
         }
     }
