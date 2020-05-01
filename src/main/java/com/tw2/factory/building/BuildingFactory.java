@@ -25,4 +25,8 @@ public abstract class BuildingFactory {
     protected int getLevelBuildingByBuilding(BuildingName buildingName) {
         return this.villageController.getLevelBuildingByBuilding(buildingName);
     }
+
+    protected int getLevelUpGoingBuildingByBuilding(BuildingName buildingName) {
+        return this.villageController.getLevelUpGoingByBuildingName(buildingName);
+    }
 }

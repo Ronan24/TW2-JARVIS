@@ -11,8 +11,8 @@ public class Market extends Building {
 
     private List<Integer> numberTraders;
 
-    public Market(boolean isConstruct, int level) {
-        super(BuildingName.MARKET, isConstruct, level);
+    public Market(boolean isConstruct, int level, int levelUpGoing) {
+        super(BuildingName.MARKET, isConstruct, level, levelUpGoing);
         this.buildingStaticInfoList.add(new BuildingStaticInfo(100, 100, 100, 20, 300, 3, 10));
         this.buildingStaticInfoList.add(new BuildingStaticInfo(130, 130, 130, 3, 900, 3, 12));
         this.buildingStaticInfoList.add(new BuildingStaticInfo(160, 160, 160, 4, 1500, 4, 14));

@@ -2,6 +2,8 @@ package com.tw2.controller;
 
 import com.tw2.model.ResourceType;
 import com.tw2.model.building.BuildingName;
+import com.tw2.model.unit.Army;
+import com.tw2.model.unit.UnitCategory;
 import com.tw2.model.unit.UnitStaticInfo;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
@@ -48,6 +50,37 @@ public class VillageController {
         }
     }
 
+    public void recruitArmy(Army army) {
+        this.goToBuilding(BuildingName.BARRACKS);
+
+        for (UnitStaticInfo unitType : UnitStaticInfo.values()) {
+            if (army.getUnitNumberByUnit(unitType) != 0){
+                String prefix;
+
+                switch (unitType.getUnitCategory()){
+                    case DEFENSIVE:
+                        prefix = "//div//div//div//div//div//div//div//div//div[1]//div[2]//div[1]//label[" +
+                                unitType.getIndexRecruit() +
+                                "]";
+                        break;
+                    case ATTACK:
+                        prefix = "//body//div//div//div//div[2]//div[2]//div[1]//label[" +
+                                unitType.getIndexRecruit() +
+                                "]";
+                        break;
+                    default:
+                        throw new IllegalArgumentException("Invalid unit to recruit : " + unitType);
+                }
+
+                this.webSetup.moveAndClickOn(By.xpath(prefix + "//table[1]//tbody[1]//tr[1]"), 10);
+                this.webSetup.moveAndSendKey(By.xpath(prefix + "//table[1]//tbody[1]//tr[3]//td[1]//input[1]"), "10");
+            }
+        }
+
+        this.webSetup.clickOn(By.xpath("//a[contains(@class,'btn-border btn-green btn-start-recruit')]"));
+        this.webSetup.clickOn(By.xpath("//html//body//div//section//div//div//header//ul//li//a"));
+    }
+
     public int getQueueSize() {
         try {
             return this.webSetup.readInteger(By.xpath("//div[@class='in-queue building-queue short']"));
@@ -77,12 +110,12 @@ public class VillageController {
         try {
             return this.webSetup.readInteger(By.xpath("//body/div[@id='building-label-wrapper']/div[@id='label-" +
                     buildingName.getLabelIdFromMap() +
-                    "']/a[@class='level-indicator']/span[@class='building-level']/span[1]"));
+                    "']/a[@class='level-indicator']/span[@class='building-level']/span[1]"), 2);
         } catch (TimeoutException e) {
             String potentialLevelString = this.webSetup.readValue(By.xpath("//body/div[@id='building-label-wrapper']/div[@id='label-" +
                     buildingName.getLabelIdFromMap() +
                     "']/a[@class='level-indicator']/span[@class='building-level upgrading']/span[1]"));
-            return 1 + Integer.parseInt(potentialLevelString.split("\n")[0]);
+            return Integer.parseInt(potentialLevelString.split("\n")[0]);
         }
     }
 
@@ -103,6 +136,16 @@ public class VillageController {
                     "]/div[1]/div[1]"));
         }
 
-        return Integer.parseInt(amountString);
+        return Integer.parseInt(amountString.replace(" ", ""));
+    }
+
+    public int getLevelUpGoingByBuildingName(BuildingName buildingName) {
+        try {
+            return Integer.parseInt(this.webSetup.readValue(By.xpath("//body/div[@id='building-label-wrapper']/div[@id='label-" +
+                    buildingName.getLabelIdFromMap() +
+                    "']/a[@class='level-indicator']/span[@class='building-level upgrading']/span[1]/span[1]"), 2).split("\\+")[1]);
+        } catch (TimeoutException e){
+            return 0;
+        }
     }
 }

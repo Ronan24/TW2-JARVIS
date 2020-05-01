@@ -11,8 +11,8 @@ public class Warehouse extends Building {
 
     private List<Integer> maxCapacity;
 
-    public Warehouse(boolean isConstruct, int level) {
-        super(BuildingName.WAREHOUSE, isConstruct, level);
+    public Warehouse(boolean isConstruct, int level, int levelUpGoing) {
+        super(BuildingName.WAREHOUSE, isConstruct, level, levelUpGoing);
         this.buildingStaticInfoList.add(new BuildingStaticInfo(200, 190, 170, 0, 30, 	3, 6));
         this.buildingStaticInfoList.add(new BuildingStaticInfo(240, 230, 210, 0, 60, 	3, 7));
         this.buildingStaticInfoList.add(new BuildingStaticInfo(290, 280, 250, 0, 90, 	4, 9));

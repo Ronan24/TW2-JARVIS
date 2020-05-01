@@ -5,8 +5,8 @@ package com.tw2.model.building;
  * on 05/04/2020.
  */
 public class ClayPit extends ResourceBuilding {
-    public ClayPit(boolean isConstruct, int level) {
-        super(BuildingName.CLAY_PIT, isConstruct, level);
+    public ClayPit(boolean isConstruct, int level, int levelUpGoing) {
+        super(BuildingName.CLAY_PIT, isConstruct, level, levelUpGoing);
         this.buildingStaticInfoList.add(new BuildingStaticInfo(50, 40, 30, 1, 30, 	3, 6));
         this.buildingStaticInfoList.add(new BuildingStaticInfo(60, 50, 40, 1, 60, 	3, 7));
         this.buildingStaticInfoList.add(new BuildingStaticInfo(80, 60, 50, 2, 90, 	4, 9));

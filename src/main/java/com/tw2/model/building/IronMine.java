@@ -5,8 +5,8 @@ package com.tw2.model.building;
  * on 05/04/2020.
  */
 public class IronMine extends ResourceBuilding {
-    public IronMine(boolean isConstruct, int level) {
-        super(BuildingName.IRON_MINE, isConstruct, level);
+    public IronMine(boolean isConstruct, int level, int levelUpGoing) {
+        super(BuildingName.IRON_MINE, isConstruct, level, levelUpGoing);
         this.buildingStaticInfoList.add(new BuildingStaticInfo(60, 50, 60, 1, 30, 3, 6));
         this.buildingStaticInfoList.add(new BuildingStaticInfo(70, 60, 70, 2, 60, 3, 7));
         this.buildingStaticInfoList.add(new BuildingStaticInfo(90, 80, 90, 2, 90, 4, 9));

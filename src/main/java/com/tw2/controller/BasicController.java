@@ -29,6 +29,8 @@ public class BasicController {
     }
 
     public void attackVillage(Point point, Army army, Army armyToSend) throws InterruptedException {
+        LOGGER.debug("Let's attack the village at : {}", point);
+
         this.goToVillage(point);
 
         webSetup.clickOn(By.xpath("//li[contains(@class,'context-menu-item custom-army')]//div//div[contains(@class,'border')]"), 10);
@@ -39,8 +41,6 @@ public class BasicController {
         for (UnitStaticInfo unitStaticInfo : UnitStaticInfo.values()) {
             if (army.getUnitNumberByUnit(unitStaticInfo) > 0) {
                 if (armyToSend.getUnitNumberByUnit(unitStaticInfo) != 0) {
-                    LOGGER.debug("Let's send {} {}", armyToSend.getUnitNumberByUnit(unitStaticInfo), unitStaticInfo);
-
                     webSetup.sendKey(By.xpath("/html[1]/body[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/ul[1]/li[" +
                                     index +
                                     "]/div[1]/div[3]/input[1]"),

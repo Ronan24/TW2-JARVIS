@@ -5,8 +5,8 @@ package com.tw2.model.building;
   on 05/04/2020.
  */
 public class Hospital extends Building {
-    public Hospital(boolean isConstruct, int level) {
-        super(BuildingName.HOSPITAL, isConstruct, level);
+    public Hospital(boolean isConstruct, int level, int levelUpGoing) {
+        super(BuildingName.HOSPITAL, isConstruct, level, levelUpGoing);
         this.buildingStaticInfoList.add(new BuildingStaticInfo(50, 80, 30, 2, 180, 3, 15));
         this.buildingStaticInfoList.add(new BuildingStaticInfo(100, 160, 60, 3, 300, 3, 18));
         this.buildingStaticInfoList.add(new BuildingStaticInfo(200, 320, 120, 3, 600, 4, 22));
